@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AmazonApp</string>
+    <string name="splash_intro">Welcome to Amazon</string>
 </resources>
