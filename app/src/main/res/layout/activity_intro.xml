@@ -4,6 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/palette_gray"
     tools:context=".view.activity.IntroActivity">
+    <androidx.viewpager2.widget.ViewPager2
+
+        android:id="@+id/viewPager2"
+        android:layout_width="@dimen/intro_viewPage_width"
+        android:layout_height="@dimen/intro_viewPage_height"
+       app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <com.google.android.material.tabs.TabLayout
+        android:background="@color/palette_gray"
+        android:layout_marginBottom="@dimen/_50dp"
+        android:id="@+id/tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tabGravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

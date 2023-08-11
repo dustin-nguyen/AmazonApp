@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">AmazonApp</string>
     <string name="splash_intro">Welcome to Amazon</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="intro1_fragment">Fast and Free Shipping</string>
+    <string name="intro2_fragment">Easy Return Policy</string>
+    <string name="intro3_fragment">Join Us</string>
 </resources>
