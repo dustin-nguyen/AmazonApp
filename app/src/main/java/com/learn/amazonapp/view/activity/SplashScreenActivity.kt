@@ -36,7 +36,7 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun checkLogin(): Boolean {
         val securedSharedPreferences = SharedPrefConstant.getSecuredSharedPref(this@SplashScreenActivity.applicationContext)
         val username = securedSharedPreferences.getString(SharedPrefConstant.USERNAME,"") ?:""
-        val password = securedSharedPreferences.getString(SharedPrefConstant.PASSWORD,"")
+        //val password = securedSharedPreferences.getString(SharedPrefConstant.PASSWORD,"")
         if(username == "")
             return false
         return true

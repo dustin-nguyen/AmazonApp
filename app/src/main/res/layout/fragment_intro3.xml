@@ -23,6 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
         <Button
+            android:id="@+id/btn_join"
             android:textStyle="bold"
             android:layout_margin="@dimen/margin_20dp"
             android:layout_width="wrap_content"

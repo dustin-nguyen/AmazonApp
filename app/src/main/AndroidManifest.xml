@@ -15,11 +15,14 @@
         android:theme="@style/Theme.AmazonApp"
         tools:targetApi="31">
         <activity
+            android:name=".view.activity.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.IntroActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.SplashScreenActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,9 +31,7 @@
         </activity>
         <activity
             android:name=".view.activity.MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
