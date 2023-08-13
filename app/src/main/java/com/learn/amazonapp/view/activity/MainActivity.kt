@@ -2,13 +2,54 @@ package com.learn.amazonapp.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import com.learn.amazonapp.R
 import com.learn.amazonapp.databinding.ActivityMainBinding
+import com.learn.amazonapp.view.fragment.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home){
+            if(binding.main.isDrawerOpen(GravityCompat.START))
+                binding.main.closeDrawer(GravityCompat.START)
+            else
+                binding.main.openDrawer(GravityCompat.START)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding= ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setup()
+    }
+
+    private fun setup() {
+        setupDrawer()
+        handleMenuEvent(HomeFragment())
+    }
+    private fun setupDrawer(){
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.baseline_menu_24)
+        }
+        binding.navViews.setNavigationItemSelectedListener { menuItems->
+            when(menuItems.itemId){
+                R.id.home -> handleMenuEvent(HomeFragment())
+
+            }
+            true
+        }
+    }
+    private fun handleMenuEvent(fragment: Fragment){
+        binding.main.closeDrawer(GravityCompat.START)
+        supportFragmentManager.beginTransaction().replace(R.id.parent,fragment).commit()
     }
 }

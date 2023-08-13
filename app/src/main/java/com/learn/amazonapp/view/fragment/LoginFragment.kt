@@ -1,5 +1,6 @@
 package com.learn.amazonapp.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -37,6 +38,11 @@ class LoginFragment : Fragment(),LoginFragmentContract.ILoginFragmentView {
         super.onViewCreated(view, savedInstanceState)
         setup()
     }
+
+    override var fragmentContext: Context
+        get() = requireContext()
+        set(value) {}
+
     override fun loginSuccess() {
         parentLoginCommunicator.loginSuccess()
     }

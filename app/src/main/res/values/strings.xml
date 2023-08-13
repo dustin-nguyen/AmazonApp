@@ -9,4 +9,5 @@
     <string name="skip_btn">Skip</string>
     <string name="login">Login</string>
     <string name="SIGNUP">SIGNUP</string>
+    <string name="option_menu_search">Search</string>
 </resources>
