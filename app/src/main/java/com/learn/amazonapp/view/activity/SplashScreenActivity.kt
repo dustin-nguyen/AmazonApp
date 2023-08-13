@@ -1,16 +1,18 @@
 package com.learn.amazonapp.view.activity
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.learn.amazonapp.R
-import com.learn.amazonapp.databinding.ActivityMainBinding
 import com.learn.amazonapp.databinding.ActivitySplashScreenBinding
-import com.learn.amazonapp.view.util.SharedPrefConstant
+import com.learn.amazonapp.presenter.splash.SplashContract
+import com.learn.amazonapp.presenter.splash.SplashPresenter
 
-class SplashScreenActivity : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity() , SplashContract.ISplashView{
     private lateinit var binding: ActivitySplashScreenBinding
+    private lateinit var splashPresenter: SplashPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
@@ -18,14 +20,28 @@ class SplashScreenActivity : AppCompatActivity() {
         setup()
     }
 
-    private fun setup() {
-        Handler().postDelayed({
-            if(checkLogin()==true)
-                goToActivity(MainActivity::class.java)
-            else
-                goToActivity(IntroActivity::class.java)
-        }, 2000)
+    override var context: Context
+        get() = this@SplashScreenActivity.applicationContext
+        set(value) {}
 
+    override fun navigateToHome() {
+        goToActivity(MainActivity::class.java)
+    }
+
+    override fun navigateToIntro() {
+        goToActivity(IntroActivity::class.java)
+    }
+
+    private fun setup() {
+        initPresenter()
+        Handler().postDelayed({
+            splashPresenter.checkLogin()
+        },2000)
+
+
+    }
+    private fun initPresenter(){
+        splashPresenter= SplashPresenter(this)
     }
     private fun goToActivity( cls: Class<*> ){
         val dataIntent = Intent(this, cls)
@@ -33,12 +49,6 @@ class SplashScreenActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun checkLogin(): Boolean {
-        val securedSharedPreferences = SharedPrefConstant.getSecuredSharedPref(this@SplashScreenActivity.applicationContext)
-        val username = securedSharedPreferences.getString(SharedPrefConstant.USERNAME,"") ?:""
-        //val password = securedSharedPreferences.getString(SharedPrefConstant.PASSWORD,"")
-        if(username == "")
-            return false
-        return true
-    }
+
+
 }

@@ -2,6 +2,7 @@
 <resources>
     <dimen name="_250dp">250dp</dimen>
     <dimen name="margin_20dp">20dp</dimen>
+    <dimen name="custom_tab_selector">10dp</dimen>
     <dimen name="splash_title">30sp</dimen>
     <dimen name="intro_viewPage_width">350dp</dimen>
     <dimen name="intro_viewPage_height">450dp</dimen>
@@ -10,4 +11,5 @@
     <dimen name="_8dp">8dp</dimen>
     <dimen name="cardCornerRadius">20dp</dimen>
     <dimen name="cardElevation">10dp</dimen>
+    <dimen name="button_text_size">20sp</dimen>
 </resources>

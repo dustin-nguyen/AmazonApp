@@ -7,13 +7,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/cardCornerRadius"
     android:elevation="@dimen/cardElevation"
-    tools:context=".view.fragment.Intro1Fragment">
+    tools:context=".view.fragment.intro.Intro1Fragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
+
             android:id="@+id/intro_img"
             android:layout_width="@dimen/_250dp"
             android:layout_height="@dimen/_250dp"

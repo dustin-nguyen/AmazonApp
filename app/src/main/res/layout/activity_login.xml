@@ -12,8 +12,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_change_fragment"
        />
-    <Button
-        android:backgroundTint="@color/white"
+    <androidx.appcompat.widget.AppCompatButton
+
         android:textColor="@color/black"
         android:text="Hello"
 

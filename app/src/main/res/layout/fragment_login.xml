@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.LoginFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:textColor="@color/black"
         android:background="@color/palette_orange"
@@ -15,7 +15,95 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:id="@+id/tv_header"
+        android:text="LOGIN"
         app:layout_constraintTop_toTopOf="parent"/>
+    <ImageView
+        android:layout_margin="@dimen/_20dp"
+        android:id="@+id/login_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/login"
+        app:layout_constraintTop_toBottomOf="@id/tv_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/upper_guideLinde"
+     />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/upper_guideLinde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.30" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_guideLinde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_guideLinde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
+    <TextView
+        android:layout_marginBottom="@dimen/_20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_20dp"
+        android:text="Email Id"
+        android:id="@+id/tv_email"
+        app:layout_constraintStart_toStartOf="@id/left_guideLinde"
+        app:layout_constraintEnd_toEndOf="@id/right_guideLinde"
+        app:layout_constraintTop_toBottomOf="@id/upper_guideLinde"/>
+    <EditText
+        android:layout_marginBottom="@dimen/_20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintStart_toStartOf="@id/left_guideLinde"
+        app:layout_constraintEnd_toEndOf="@id/right_guideLinde"
+        app:layout_constraintTop_toBottomOf="@id/tv_email"/>
+    <TextView
+        android:layout_marginTop="@dimen/_20dp"
+        android:layout_marginBottom="@dimen/_20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_20dp"
+        android:text="Password"
+        android:id="@+id/tv_password"
+        app:layout_constraintStart_toStartOf="@id/left_guideLinde"
+        app:layout_constraintEnd_toEndOf="@id/right_guideLinde"
+        app:layout_constraintTop_toBottomOf="@id/et_email"/>
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_marginBottom="@dimen/_20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="@id/left_guideLinde"
+        app:layout_constraintEnd_toEndOf="@id/right_guideLinde"
+        app:layout_constraintTop_toBottomOf="@id/tv_password"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/PrimaryButton"
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_20dp"
+        android:text="@string/login"
+        app:layout_constraintEnd_toEndOf="@id/right_guideLinde"
+        app:layout_constraintStart_toStartOf="@id/left_guideLinde"
+        app:layout_constraintBottom_toTopOf="@id/lower_guideLinde"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/lower_guideLinde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.70" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,13 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.learn.amazonapp.R
+import com.learn.amazonapp.view.LoginCommunicator
 
 
 class SignupFragment : Fragment() {
-
+    private lateinit var parentLoginCommunicator: LoginCommunicator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        parentLoginCommunicator=context as LoginCommunicator
 
     }
 
@@ -24,7 +26,16 @@ class SignupFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_signup, container, false)
     }
 
-    companion object {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setup()
+    }
 
+    private fun setup() {
+        parentLoginCommunicator.setMessage(GO_TO_LOGIN_TEXT_BUTTON)
+    }
+
+    companion object {
+        const val GO_TO_LOGIN_TEXT_BUTTON="Click here to login."
     }
 }

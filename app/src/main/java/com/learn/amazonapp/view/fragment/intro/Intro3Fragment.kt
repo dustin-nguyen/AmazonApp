@@ -1,4 +1,4 @@
-package com.learn.amazonapp.view.fragment
+package com.learn.amazonapp.view.fragment.intro
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.learn.amazonapp.R
 import com.learn.amazonapp.databinding.FragmentIntro3Binding
 import com.learn.amazonapp.view.activity.LoginActivity
 

@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.AmazonApp" parent="Base.Theme.AmazonApp" />
+
+    <style name="PrimaryButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/button_text_primary</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:background"> @drawable/primary_button</item>
+        <item name="android:backgroundTint"> @color/button_primary</item>
+    </style>
 </resources>

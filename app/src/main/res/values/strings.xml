@@ -6,4 +6,7 @@
     <string name="intro1_fragment">Fast and Free Shipping</string>
     <string name="intro2_fragment">Easy Return Policy</string>
     <string name="intro3_fragment">Join Us</string>
+    <string name="skip_btn">Skip</string>
+    <string name="login">Login</string>
+    <string name="SIGNUP">SIGNUP</string>
 </resources>

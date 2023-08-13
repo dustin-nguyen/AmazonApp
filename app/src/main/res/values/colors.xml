@@ -7,4 +7,7 @@
     <color name="dot_unselected">#6A5C5C</color>
     <color name="palette_blue">#007EB9</color>
     <color name="palette_cerebral_grey">#CCCCCC</color>
+    <color name="button_primary">#FF9900</color>
+    <color name="button_text_primary">#FF000000</color>
+
 </resources>

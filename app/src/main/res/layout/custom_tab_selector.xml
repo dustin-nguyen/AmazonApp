@@ -7,16 +7,16 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgDotUnselected"
-        android:layout_width="@dimen/_20dp"
-        android:layout_height="@dimen/_20dp"
+        android:layout_width="@dimen/custom_tab_selector"
+        android:layout_height="@dimen/custom_tab_selector"
         android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/_8dp"
         android:background="@drawable/dot_unselected" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgDotSelected"
-        android:layout_width="@dimen/_20dp"
-        android:layout_height="@dimen/_20dp"
+        android:layout_width="@dimen/custom_tab_selector"
+        android:layout_height="@dimen/custom_tab_selector"
         android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/_8dp"
         android:background="@drawable/dot_selected" />

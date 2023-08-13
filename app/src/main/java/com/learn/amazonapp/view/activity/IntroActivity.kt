@@ -1,19 +1,19 @@
 package com.learn.amazonapp.view.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.learn.amazonapp.R
 import com.learn.amazonapp.databinding.ActivityIntroBinding
 import com.learn.amazonapp.databinding.CustomTabSelectorBinding
 
 import com.learn.amazonapp.view.adapter.IntroViewPageAdapter
-import com.learn.amazonapp.view.fragment.Intro1Fragment
-import com.learn.amazonapp.view.fragment.Intro2Fragment
-import com.learn.amazonapp.view.fragment.Intro3Fragment
+import com.learn.amazonapp.view.fragment.intro.Intro1Fragment
+import com.learn.amazonapp.view.fragment.intro.Intro2Fragment
+import com.learn.amazonapp.view.fragment.intro.Intro3Fragment
 
 class IntroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntroBinding
@@ -28,9 +28,13 @@ class IntroActivity : AppCompatActivity() {
 
     private fun setup() {
         setupWebview()
+        binding.btnSkip.setOnClickListener {
+            val dataIntent = Intent(this@IntroActivity, LoginActivity::class.java)
+            startActivity(dataIntent)
+        }
     }
     fun setupWebview(){
-        listOfFragment= listOf(Intro1Fragment(), Intro2Fragment(),Intro3Fragment())
+        listOfFragment= listOf(Intro1Fragment(), Intro2Fragment(), Intro3Fragment())
         viewPageAdapter = IntroViewPageAdapter(listOfFragment,this@IntroActivity)
 
         with(binding){

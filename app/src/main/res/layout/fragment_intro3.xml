@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/cardCornerRadius"
     android:elevation="@dimen/cardElevation"
-    tools:context=".view.fragment.Intro3Fragment">
+    tools:context=".view.fragment.intro.Intro3Fragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,13 +22,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_join"
-            android:textStyle="bold"
             android:layout_margin="@dimen/margin_20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/splash_title"
+            android:textSize="@dimen/_20dp"
             android:backgroundTint="@color/palette_orange"
             android:textColor="@color/black"
             android:text="@string/intro3_fragment"

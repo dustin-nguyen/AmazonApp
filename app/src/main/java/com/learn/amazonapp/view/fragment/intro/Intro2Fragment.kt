@@ -1,4 +1,4 @@
-package com.learn.amazonapp.view.fragment
+package com.learn.amazonapp.view.fragment.intro
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
