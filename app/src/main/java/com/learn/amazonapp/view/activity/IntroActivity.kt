@@ -37,6 +37,7 @@ class IntroActivity : AppCompatActivity() {
             val dataIntent = Intent(this@IntroActivity, LoginActivity::class.java)
             startActivity(dataIntent)
         }
+
     }
     fun setupWebview(){
         listOfFragment= listOf(Intro1Fragment(), Intro2Fragment(), Intro3Fragment())
@@ -72,4 +73,5 @@ class IntroActivity : AppCompatActivity() {
             }
         }
     }
+
 }
