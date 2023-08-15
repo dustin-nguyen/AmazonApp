@@ -20,6 +20,7 @@ import com.learn.amazonapp.model.ResponseCallBack
 import com.learn.amazonapp.model.remote.entity.CategoryResponse
 import com.learn.amazonapp.model.remote.entity.ListOfItemResponse
 import com.learn.amazonapp.model.remote.entity.LoginResponse
+import com.learn.amazonapp.model.remote.entity.ProductResponse
 import com.learn.amazonapp.model.remote.entity.SubCatResponse
 import com.learn.amazonapp.model.remote.entity.Subcategory
 import org.json.JSONObject
@@ -138,6 +139,33 @@ class VolleyHandler(val context: Context)  {
         }
         requestQueue.add(jsonRequest)
     }
+    fun getItemById(id:String,responseCallBack: ResponseCallBack){
+        val requestQueue = Volley.newRequestQueue(context)
+        val jsonObject = JSONObject()
+
+        val url = "$BASE_URL$BASE_PRODUCT/$id"
+        val jsonRequest =object :JsonObjectRequest(Request.Method.GET, url, jsonObject,
+            Response.Listener { response ->
+                // Handle the response from the server
+                Log.d("Response", response.toString())
+                val typeToken = object : TypeToken<ProductResponse>(){}
+                val product = Gson().fromJson(response.toString(),typeToken)
+                responseCallBack.success(product.product)
+            },
+            Response.ErrorListener { error ->
+                // Handle errors
+                responseCallBack.failure(error.toString())
+            }){
+            override fun getHeaders(): MutableMap<String, String> {
+                val header =HashMap<String,String>()
+                header[CONTENT_TYPE]= APPLICATION_JSON
+                return super.getHeaders()
+            }
+
+
+        }
+        requestQueue.add(jsonRequest)
+    }
 
 
     companion object{
@@ -147,6 +175,7 @@ class VolleyHandler(val context: Context)  {
         const val BASE_SUBCATEGORY ="SubCategory"
         const val KEY_CATEGORY_ID="category_id"
         const val BASE_LIST_OF_ITEM="$BASE_URL$BASE_SUBCATEGORY/products"
+        const val BASE_PRODUCT="Product/details/"
 
         const val KEY_EMAIL_ID="email_id"
         const val KEY_PASSWORD="password"
