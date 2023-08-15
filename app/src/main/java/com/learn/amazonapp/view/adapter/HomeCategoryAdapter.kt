@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.amazonapp.databinding.ViewHolderHomeCategoryBinding
 import com.learn.amazonapp.model.remote.entity.Category
+import com.squareup.picasso.Picasso
 
 class HomeCategoryAdapter (val listOfCategory: List<Category>) :
     RecyclerView.Adapter<HomeCategoryAdapter.CategoryHomeViewHolder>() {
@@ -43,9 +44,13 @@ class HomeCategoryAdapter (val listOfCategory: List<Category>) :
         fun bind(category: Category){
             binding.apply {
                 tvTitle.text=category.category_name
-                imgCategory.setImageResource(category.category_image_url.toInt())
+               Picasso.get().load(URL_IMAGE+category.category_image_url).into(binding.imgCategory)
+
             }
         }
 
+    }
+    companion object {
+        const val URL_IMAGE = "http://10.0.2.2/myshop/images/"
     }
 }

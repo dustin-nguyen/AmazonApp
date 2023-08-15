@@ -61,7 +61,8 @@ class LoginFragment : Fragment(),LoginFragmentContract.ILoginFragmentView {
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
-            loginFragmentPresenter.login(email,password)
+
+            loginFragmentPresenter.login("test1@gmail.com","password123")
         }
     }
 

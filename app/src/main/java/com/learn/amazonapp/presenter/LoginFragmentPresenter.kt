@@ -19,13 +19,12 @@ class LoginFragmentPresenter(private val volleyHandler: VolleyHandler,
             override fun success(loginResponse: Any) {
                 loginResponse as LoginResponse
                 Log.i(TAG,loginResponse.toString())
-               /* if(loginResposne.status == RESPONSE_OKAY){
+                if(loginResponse.status == RESPONSE_OKAY){
                     loginFragmentView.loginSuccess()
                     setLogin(loginResponse.user!!)
                     }
                 else
-                    loginFragmentView.loginFail(loginResponse.message)*/
-                loginFragmentView.loginSuccess()
+                    loginFragmentView.loginFail(loginResponse.message)
             }
 
             override fun failure(error: String) {
@@ -48,6 +47,6 @@ class LoginFragmentPresenter(private val volleyHandler: VolleyHandler,
     }
     companion object{
         const val TAG="LoginFragmentPresenter"
-        const val RESPONSE_OKAY=1
+        const val RESPONSE_OKAY=0
     }
 }
