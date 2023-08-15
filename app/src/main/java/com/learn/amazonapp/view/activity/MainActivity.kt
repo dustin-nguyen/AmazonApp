@@ -8,9 +8,10 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.learn.amazonapp.R
 import com.learn.amazonapp.databinding.ActivityMainBinding
+import com.learn.amazonapp.view.HomeCommunicator
 import com.learn.amazonapp.view.fragment.HomeFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),HomeCommunicator {
     private lateinit var binding: ActivityMainBinding
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -23,6 +24,12 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onBackPressed() {
+        if(supportFragmentManager.backStackEntryCount>0){
+            supportFragmentManager.popBackStack()
+        }else
+            super.onBackPressed()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
@@ -32,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setup() {
         setupDrawer()
-        handleMenuEvent(HomeFragment())
+        handleMenuEvent(HOME,HomeFragment())
     }
     private fun setupDrawer(){
         setSupportActionBar(binding.toolbar)
@@ -42,14 +49,21 @@ class MainActivity : AppCompatActivity() {
         }
         binding.navViews.setNavigationItemSelectedListener { menuItems->
             when(menuItems.itemId){
-                R.id.home -> handleMenuEvent(HomeFragment())
+                R.id.home -> handleMenuEvent(HOME,HomeFragment())
 
             }
             true
         }
     }
-    private fun handleMenuEvent(fragment: Fragment){
+    private fun handleMenuEvent(backStackEntryName:String,fragment: Fragment){
         binding.main.closeDrawer(GravityCompat.START)
-        supportFragmentManager.beginTransaction().replace(R.id.parent,fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.parent,fragment).addToBackStack(backStackEntryName).commit()
+    }
+    companion object{
+        const val HOME="HOME"
+    }
+
+    override fun goToFragment(backStackEntryName:String,fragment: Fragment) {
+        handleMenuEvent(backStackEntryName,fragment)
     }
 }

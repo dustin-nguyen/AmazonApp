@@ -18,6 +18,8 @@ import com.learn.amazonapp.model.remote.entity.Category
 import com.learn.amazonapp.presenter.LoginFragmentPresenter
 import com.learn.amazonapp.presenter.home.HomeFragmentContract
 import com.learn.amazonapp.presenter.home.HomeFragmentPresenter
+import com.learn.amazonapp.view.HomeCommunicator
+import com.learn.amazonapp.view.LoginCommunicator
 import com.learn.amazonapp.view.adapter.HomeCategoryAdapter
 
 
@@ -26,6 +28,10 @@ class HomeFragment :Fragment(), HomeFragmentContract.IHomeFragmentView {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeFragmentPresenter: HomeFragmentPresenter
     private lateinit var categoryAdapter: HomeCategoryAdapter
+
+
+    private lateinit var parentHomeCommunicator: HomeCommunicator
+
 
     override var fragmentContext: Context
         get() = requireContext()
@@ -41,6 +47,7 @@ class HomeFragment :Fragment(), HomeFragmentContract.IHomeFragmentView {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        parentHomeCommunicator=context as HomeCommunicator
 
     }
 
@@ -76,19 +83,19 @@ class HomeFragment :Fragment(), HomeFragmentContract.IHomeFragmentView {
     }
     private fun setupNewBookRecyclerView(){
         binding.rvHomeCategory.layoutManager=GridLayoutManager(requireContext(),NUM_OF_COLUMN)
-//        binding.rvHomeCategory.layoutManager=
-//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL,false)
+
         categoryAdapter= HomeCategoryAdapter(listOfCategory)
         binding.rvHomeCategory.adapter=categoryAdapter
 
         categoryAdapter.setOnCategorySelectedListener { category, i ->
-            Toast.makeText(requireContext(),"selected ${category.category_name}", Toast.LENGTH_SHORT).show()
+           parentHomeCommunicator.goToFragment(SUBCAT_TAG,SubCatFragment(category))
         }
 
     }
 
     companion object {
         const val NUM_OF_COLUMN=2
+        const val SUBCAT_TAG="SUBCATEGORY"
 
     }
 
