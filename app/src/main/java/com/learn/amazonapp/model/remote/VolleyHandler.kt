@@ -18,6 +18,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.learn.amazonapp.model.ResponseCallBack
 import com.learn.amazonapp.model.remote.entity.CategoryResponse
+import com.learn.amazonapp.model.remote.entity.ListOfItemResponse
 import com.learn.amazonapp.model.remote.entity.LoginResponse
 import com.learn.amazonapp.model.remote.entity.SubCatResponse
 import com.learn.amazonapp.model.remote.entity.Subcategory
@@ -110,6 +111,34 @@ class VolleyHandler(val context: Context)  {
         }
         requestQueue.add(jsonRequest)
     }
+    fun getItemBySubCatId(subCategoryId:String,responseCallBack: ResponseCallBack){
+        val requestQueue = Volley.newRequestQueue(context)
+        val jsonObject = JSONObject()
+
+        val url = "$BASE_LIST_OF_ITEM/$subCategoryId"
+        val jsonRequest =object :JsonObjectRequest(Request.Method.GET, url, jsonObject,
+            Response.Listener { response ->
+                // Handle the response from the server
+                Log.d("Response", response.toString())
+                val typeToken = object : TypeToken<ListOfItemResponse>(){}
+                val listOfItemResponse = Gson().fromJson(response.toString(),typeToken)
+                responseCallBack.success(listOfItemResponse)
+            },
+            Response.ErrorListener { error ->
+                // Handle errors
+                responseCallBack.failure(error.toString())
+            }){
+            override fun getHeaders(): MutableMap<String, String> {
+                val header =HashMap<String,String>()
+                header[CONTENT_TYPE]= APPLICATION_JSON
+                return super.getHeaders()
+            }
+
+
+        }
+        requestQueue.add(jsonRequest)
+    }
+
 
     companion object{
         const val BASE_URL =" http://10.0.2.2/myshop/index.php/"
@@ -117,6 +146,7 @@ class VolleyHandler(val context: Context)  {
         const val BASE_CATEGORY ="Category"
         const val BASE_SUBCATEGORY ="SubCategory"
         const val KEY_CATEGORY_ID="category_id"
+        const val BASE_LIST_OF_ITEM="$BASE_URL$BASE_SUBCATEGORY/products"
 
         const val KEY_EMAIL_ID="email_id"
         const val KEY_PASSWORD="password"

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
+    android:layout_margin="@dimen/_20dp"
+    app:cardElevation="@dimen/cardElevation">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_margin="@dimen/_20dp"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/img_item"
+            android:src="@drawable/ic_launcher_background"/>
+        <TextView
+            android:textColor="@color/palette_orange"
+            android:layout_margin="@dimen/_20dp"
+            style="@style/PrimaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_item"
+            android:text="Name"
+            android:id="@+id/tv_name"/>
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            app:layout_constraintTop_toTopOf="parent"
+
+            app:layout_constraintStart_toEndOf="@id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:rating="3"/>
+        <TextView
+
+            android:layout_margin="@dimen/_20dp"
+            style="@style/PrimaryText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            app:layout_constraintStart_toEndOf="@id/img_item"
+            android:text="Body"
+            android:id="@+id/tv_body"/>
+        <TextView
+            android:textColor="@color/palette_orange"
+            android:layout_margin="@dimen/_20dp"
+            style="@style/PrimaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_body"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_item"
+            android:text="Price"
+            android:id="@+id/tv_price"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_margin="@dimen/_20dp"
+            android:textSize="10dp"
+            style="@style/PrimaryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_body"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Add to Cart"
+            android:id="@+id/btn_add_toCart"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
