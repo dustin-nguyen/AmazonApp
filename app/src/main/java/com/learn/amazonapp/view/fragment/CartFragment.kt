@@ -8,19 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.learn.amazonapp.R
 import com.learn.amazonapp.databinding.FragmentCartBinding
-import com.learn.amazonapp.databinding.FragmentHomeBinding
-import com.learn.amazonapp.model.remote.VolleyHandler
 import com.learn.amazonapp.model.remote.entity.Product
-import com.learn.amazonapp.presenter.CartContract
-import com.learn.amazonapp.presenter.CartPresenter
-import com.learn.amazonapp.presenter.home.HomeFragmentPresenter
+import com.learn.amazonapp.presenter.cart.CartContract
+import com.learn.amazonapp.presenter.cart.CartPresenter
 import com.learn.amazonapp.view.HomeCommunicator
 import com.learn.amazonapp.view.adapter.CartAdapter
-import com.learn.amazonapp.view.adapter.ShowItemAdapter
 
-class CartFragment : Fragment(),CartContract.ICartFragmentView {
+class CartFragment : Fragment(), CartContract.ICartFragmentView {
     private lateinit var cartPresenter: CartPresenter
     lateinit var binding: FragmentCartBinding
     lateinit var listOfItem: List<Product>
@@ -44,6 +39,14 @@ class CartFragment : Fragment(),CartContract.ICartFragmentView {
         makeToast(error)
     }
 
+    override fun updateTotalPrice(price: Int) {
+        binding.tvTotalBill.text=price.toString()
+    }
+
+    override fun getTotalPrice(): Int {
+        return  binding.tvTotalBill.text.toString().toInt()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,19 +66,20 @@ class CartFragment : Fragment(),CartContract.ICartFragmentView {
         cartPresenter.getAllItemInCart()
     }
     private fun intiPresenter() {
-        cartPresenter=CartPresenter()
-        cartPresenter.setView(this)
+        cartPresenter= CartPresenter()
+        cartPresenter.setFragmentView(this)
     }
     private fun setupNewBookRecyclerView(){
         binding.rvItem.layoutManager=
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
 
-        cartAdapter= CartAdapter(listOfItem,parentHomeCommunicator)
+        cartAdapter= CartAdapter(listOfItem,cartPresenter)
         binding.rvItem.adapter=cartAdapter
 
         cartAdapter.setOnProductSelectedListener { product, i ->
             makeToast(product.toString())
         }
+
 
     }
     fun makeToast(message: String) {

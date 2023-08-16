@@ -4,14 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.amazonapp.databinding.ViewHolderCartItemBinding
-import com.learn.amazonapp.databinding.ViewHolderHomeCategoryBinding
-import com.learn.amazonapp.databinding.ViewHolderItemBinding
-import com.learn.amazonapp.model.remote.entity.Category
 import com.learn.amazonapp.model.remote.entity.Product
-import com.learn.amazonapp.view.HomeCommunicator
-import com.squareup.picasso.Picasso
+import com.learn.amazonapp.presenter.cart.CartPresenter
 
-class CartAdapter(val listOfItem: List<Product>, val parentHomeCommunicator: HomeCommunicator):
+class CartAdapter(val listOfItem: List<Product>, val cartPresenter: CartPresenter):
     RecyclerView.Adapter<CartAdapter.ProductViewHolder>() {
     private lateinit var binding: ViewHolderCartItemBinding
 
@@ -56,7 +52,35 @@ class CartAdapter(val listOfItem: List<Product>, val parentHomeCommunicator: Hom
                 //Picasso.get().load(URL_IMAGE+category.category_image_url).into(binding.imgCategory)
 
             }
+            setupButton(product)
 
+        }
+
+        private fun setupButton(product: Product) {
+            binding.btnIncrease.setOnClickListener {
+                val currentValue = binding.tvQuantity.text.toString().toInt()+1
+                binding.tvQuantity.setText(currentValue.toString())
+                updateTotalPrice(product)
+
+                cartPresenter.updateTotalPrice(product.price.toInt())
+
+            }
+            binding.btnDecrease.setOnClickListener {
+                val currentValue = binding.tvQuantity.text.toString().toInt()
+                if(currentValue>0){
+                    binding.tvQuantity.setText((currentValue - 1).toString())
+                    updateTotalPrice(product)
+                    cartPresenter.updateTotalPrice(-product.price.toInt())
+                }
+
+
+
+            }
+        }
+        private fun updateTotalPrice(product: Product){
+            val currentQuantity= binding.tvQuantity.text.toString().toInt()
+            val totalPrice=currentQuantity * product.price.toInt()
+            binding.tvTotalPrice.text= totalPrice.toString()
         }
 
     }
