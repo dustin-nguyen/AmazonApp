@@ -17,6 +17,8 @@ import com.learn.amazonapp.model.remote.entity.Subcategory
 import com.learn.amazonapp.presenter.ListOfItem.ShowItemFragmentContract
 import com.learn.amazonapp.presenter.ListOfItem.ShowItemPresenter
 import com.learn.amazonapp.presenter.subcat.SubCatPresenter
+import com.learn.amazonapp.view.HomeCommunicator
+import com.learn.amazonapp.view.LoginCommunicator
 import com.learn.amazonapp.view.adapter.ShowItemAdapter
 
 
@@ -25,6 +27,12 @@ class ShowItemFragment(val subCat:Subcategory) : Fragment(),ShowItemFragmentCont
     lateinit var showItemAdapter: ShowItemAdapter
     lateinit var listOfItem: List<Product>
     lateinit var showItemPresenter:ShowItemPresenter
+    lateinit var parentHomeCommunicator: HomeCommunicator
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        parentHomeCommunicator=context as HomeCommunicator
+    }
 
     override var fragmentContext: Context
         get() = requireContext()
@@ -65,7 +73,7 @@ class ShowItemFragment(val subCat:Subcategory) : Fragment(),ShowItemFragmentCont
         binding.rvItem.layoutManager=
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
 
-        showItemAdapter= ShowItemAdapter(listOfItem)
+        showItemAdapter= ShowItemAdapter(listOfItem,parentHomeCommunicator)
         binding.rvItem.adapter=showItemAdapter
 
         showItemAdapter.setOnProductSelectedListener { product, i ->

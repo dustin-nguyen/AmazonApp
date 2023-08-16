@@ -1,6 +1,6 @@
 package com.learn.amazonapp.model.remote.entity
 
-data class ProductX(
+data class ProductDetail(
     val average_rating: String,
     val category_id: String,
     val description: String,
