@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.amazonapp.databinding.ViewHolderCartItemBinding
+import com.learn.amazonapp.model.ProductInCart
 import com.learn.amazonapp.model.remote.entity.Product
 import com.learn.amazonapp.presenter.cart.CartPresenter
+import com.learn.amazonapp.view.CartCommunicator
 
-class CartAdapter(val listOfItem: List<Product>, val cartPresenter: CartPresenter):
+class CartAdapter(val listOfItem: List<ProductInCart>, val cartPresenter: CartPresenter, val cartCommunicator: CartCommunicator):
     RecyclerView.Adapter<CartAdapter.ProductViewHolder>() {
     private lateinit var binding: ViewHolderCartItemBinding
 
@@ -28,8 +30,8 @@ class CartAdapter(val listOfItem: List<Product>, val cartPresenter: CartPresente
     }
 
 
-    private lateinit var productSelected: (Product, Int) -> Unit
-    fun setOnProductSelectedListener(listener: (Product, Int) -> Unit) {
+    private lateinit var productSelected: (ProductInCart, Int) -> Unit
+    fun setOnProductSelectedListener(listener: (ProductInCart, Int) -> Unit) {
         productSelected = listener
     }
 
@@ -44,11 +46,11 @@ class CartAdapter(val listOfItem: List<Product>, val cartPresenter: CartPresente
             }
         }
 
-        fun bind(product: Product) {
+        fun bind(product: ProductInCart) {
             binding.apply {
-                tvName.text = product.product_name
-                tvBody.text = product.description
-                tvPrice.text = "$ ${product.price}"
+                tvName.text = product.product.product_name
+                tvBody.text = product.product.description
+                tvPrice.text = "$ ${product.product.price}"
                 //Picasso.get().load(URL_IMAGE+category.category_image_url).into(binding.imgCategory)
 
             }
@@ -56,31 +58,35 @@ class CartAdapter(val listOfItem: List<Product>, val cartPresenter: CartPresente
 
         }
 
-        private fun setupButton(product: Product) {
+        private fun setupButton(product: ProductInCart) {
             binding.btnIncrease.setOnClickListener {
                 val currentValue = binding.tvQuantity.text.toString().toInt()+1
                 binding.tvQuantity.setText(currentValue.toString())
                 updateTotalPrice(product)
-
-                cartPresenter.updateTotalPrice(product.price.toInt())
+                product.quantity=(currentValue + 1)
+                cartPresenter.updateTotalPrice(product.product.price.toInt())
+                cartCommunicator.updateList(product)
 
             }
             binding.btnDecrease.setOnClickListener {
                 val currentValue = binding.tvQuantity.text.toString().toInt()
                 if(currentValue>0){
                     binding.tvQuantity.setText((currentValue - 1).toString())
+                    product.quantity=(currentValue - 1)
                     updateTotalPrice(product)
-                    cartPresenter.updateTotalPrice(-product.price.toInt())
+                    cartPresenter.updateTotalPrice(-product.product.price.toInt())
+                    cartCommunicator.updateList(product)
                 }
 
 
 
             }
         }
-        private fun updateTotalPrice(product: Product){
+        private fun updateTotalPrice(product: ProductInCart){
             val currentQuantity= binding.tvQuantity.text.toString().toInt()
-            val totalPrice=currentQuantity * product.price.toInt()
+            val totalPrice=currentQuantity * product.product.price.toInt()
             binding.tvTotalPrice.text= totalPrice.toString()
+            product.amount=totalPrice
         }
 
     }

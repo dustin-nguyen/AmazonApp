@@ -40,7 +40,7 @@ class ShowItemFragment(val subCat:Subcategory) : Fragment(),ShowItemFragmentCont
 
     override fun getListOfItemSuccess(listOfProduct: List<Product>) {
         listOfItem=listOfProduct
-        setupNewBookRecyclerView()
+        setupRecyclerView()
     }
 
     override fun getListOfItemCategoryFail(error: String) {
@@ -69,7 +69,7 @@ class ShowItemFragment(val subCat:Subcategory) : Fragment(),ShowItemFragmentCont
         showItemPresenter= ShowItemPresenter(VolleyHandler(requireContext()),this)
     }
 
-    private fun setupNewBookRecyclerView(){
+    private fun setupRecyclerView(){
         binding.rvItem.layoutManager=
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
 

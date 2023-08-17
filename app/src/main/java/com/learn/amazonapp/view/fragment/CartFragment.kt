@@ -9,16 +9,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.learn.amazonapp.databinding.FragmentCartBinding
-import com.learn.amazonapp.model.remote.entity.Product
+import com.learn.amazonapp.model.ProductInCart
 import com.learn.amazonapp.presenter.cart.CartContract
 import com.learn.amazonapp.presenter.cart.CartPresenter
+import com.learn.amazonapp.view.CartCommunicator
 import com.learn.amazonapp.view.HomeCommunicator
 import com.learn.amazonapp.view.adapter.CartAdapter
+import com.learn.amazonapp.view.fragment.checkout.CheckoutFragment
 
-class CartFragment : Fragment(), CartContract.ICartFragmentView {
+class CartFragment : Fragment(), CartContract.ICartFragmentView,CartCommunicator {
     private lateinit var cartPresenter: CartPresenter
     lateinit var binding: FragmentCartBinding
-    lateinit var listOfItem: List<Product>
+    lateinit var listOfItem: List<ProductInCart>
     lateinit var cartAdapter: CartAdapter
     lateinit var parentHomeCommunicator: HomeCommunicator
 
@@ -30,9 +32,9 @@ class CartFragment : Fragment(), CartContract.ICartFragmentView {
         get() = requireContext()
         set(value) {}
 
-    override fun getListOfItemSuccess(listOfProduct: List<Product>) {
+    override fun getListOfItemSuccess(listOfProduct: List<ProductInCart>) {
         listOfItem=listOfProduct
-        setupNewBookRecyclerView()
+        setupRecyclerView()
     }
 
     override fun getListOfItemCategoryFail(error: String) {
@@ -45,6 +47,10 @@ class CartFragment : Fragment(), CartContract.ICartFragmentView {
 
     override fun getTotalPrice(): Int {
         return  binding.tvTotalBill.text.toString().toInt()
+    }
+
+    override fun updateList(product: ProductInCart) {
+        cartAdapter.notifyItemChanged(listOfItem.indexOf(product))
     }
 
     override fun onCreateView(
@@ -64,16 +70,25 @@ class CartFragment : Fragment(), CartContract.ICartFragmentView {
     private fun setup() {
         intiPresenter()
         cartPresenter.getAllItemInCart()
+        setupCheckoutBtn()
     }
+
+    private fun setupCheckoutBtn() {
+        binding.btnCheckout.setOnClickListener {
+            parentHomeCommunicator.goToFragment("CHECKOUT", CheckoutFragment())
+        }
+
+    }
+
     private fun intiPresenter() {
         cartPresenter= CartPresenter()
         cartPresenter.setFragmentView(this)
     }
-    private fun setupNewBookRecyclerView(){
+    private fun setupRecyclerView(){
         binding.rvItem.layoutManager=
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
 
-        cartAdapter= CartAdapter(listOfItem,cartPresenter)
+        cartAdapter= CartAdapter(listOfItem,cartPresenter,this)
         binding.rvItem.adapter=cartAdapter
 
         cartAdapter.setOnProductSelectedListener { product, i ->
@@ -81,13 +96,17 @@ class CartFragment : Fragment(), CartContract.ICartFragmentView {
         }
 
 
+
     }
     fun makeToast(message: String) {
         Toast.makeText(requireContext(),message, Toast.LENGTH_SHORT).show()
     }
+
     companion object {
 
     }
+
+
 
 
 }
