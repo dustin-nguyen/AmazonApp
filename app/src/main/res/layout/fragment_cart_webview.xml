@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_container"
-    tools:context=".view.fragment.CartFragment">
+    tools:context=".view.fragment.checkout.CartWebviewFragment">
 
     <TextView
         android:layout_margin="@dimen/margin_20dp"
@@ -48,23 +47,24 @@
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/view_holder_cart_item"
+        tools:listitem="@layout/view_holder_cart_checkout"
         android:id="@+id/rv_item"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         tools:itemCount="2"
         app:layout_constraintTop_toTopOf="@id/upper_guideLine"
-        app:layout_constraintBottom_toTopOf="@id/btn_checkout"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+<!--        app:layout_constraintBottom_toTopOf="@id/btn_next"-->
         />
-    <androidx.appcompat.widget.AppCompatButton
+    <!--<androidx.appcompat.widget.AppCompatButton
         android:layout_margin="@dimen/margin_20dp"
         style="@style/PrimaryButton"
         android:layout_width="@dimen/checkout_button_width"
         android:layout_height="wrap_content"
-        android:text="Checkout"
-        android:id="@+id/btn_checkout"
+        android:text="Next"
+        android:id="@+id/btn_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

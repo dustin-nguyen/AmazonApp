@@ -15,4 +15,5 @@
     <dimen name="drawer_header_border_size">2dp</dimen>
     <dimen name="category_img_size">100dp</dimen>
     <dimen name="category_holder_width">150dp</dimen>
+    <dimen name="checkout_button_width">200dp</dimen>
 </resources>

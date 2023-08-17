@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
+    android:layout_margin="@dimen/_20dp"
+    app:cardElevation="@dimen/cardElevation">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_margin="@dimen/_20dp"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/img_item"
+            android:src="@drawable/ic_launcher_background"/>
+        <TextView
+            android:textColor="@color/palette_orange"
+            android:layout_margin="@dimen/_20dp"
+            style="@style/PrimaryText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_item"
+            app:layout_constraintEnd_toStartOf="@id/tv_total_price"
+            android:text="Name"
+            android:id="@+id/tv_name"/>
+        <TextView
+            android:textColor="@color/palette_orange"
+            android:layout_margin="@dimen/_20dp"
+            style="@style/PrimaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Total Price"
+            android:id="@+id/tv_total_price"/>
+
+        <TextView
+
+            android:layout_margin="@dimen/_20dp"
+            style="@style/PrimaryText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            app:layout_constraintStart_toEndOf="@id/img_item"
+            android:text="Body"
+            android:id="@+id/tv_body"/>
+        <TextView
+            android:textColor="@color/palette_orange"
+            android:layout_margin="@dimen/_20dp"
+            style="@style/PrimaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_body"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_item"
+            android:text="Price"
+            android:id="@+id/tv_price"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/_20dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_body"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="-"
+                style="@style/PrimaryButton"
+                android:id="@+id/btn_decrease"/>
+            <EditText
+                android:id="@+id/tv_quantity"
+                android:layout_marginHorizontal="@dimen/margin_20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:inputType="number"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="+"
+                style="@style/PrimaryButton"
+                android:id="@+id/btn_increase"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

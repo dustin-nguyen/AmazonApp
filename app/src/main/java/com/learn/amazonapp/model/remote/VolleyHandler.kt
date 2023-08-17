@@ -18,6 +18,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.learn.amazonapp.model.ResponseCallBack
 import com.learn.amazonapp.model.remote.entity.CategoryResponse
+import com.learn.amazonapp.model.remote.entity.ListOfAddressResponse
 import com.learn.amazonapp.model.remote.entity.ListOfItemResponse
 import com.learn.amazonapp.model.remote.entity.LoginResponse
 import com.learn.amazonapp.model.remote.entity.ProductResponse
@@ -166,10 +167,38 @@ class VolleyHandler(val context: Context)  {
         }
         requestQueue.add(jsonRequest)
     }
+    fun getListOfAddressOfUser(userid:String,responseCallBack: ResponseCallBack){
+        val requestQueue = Volley.newRequestQueue(context)
+        val jsonObject = JSONObject()
+
+        val url = "$BASE_URL$BASE_USER_LIST_ADDRESS/$userid"
+        val jsonRequest =object :JsonObjectRequest(Request.Method.GET, url, jsonObject,
+            Response.Listener { response ->
+                // Handle the response from the server
+                Log.d("Response", response.toString())
+                val typeToken = object : TypeToken<ListOfAddressResponse>(){}
+                val listOfAddress = Gson().fromJson(response.toString(),typeToken)
+                responseCallBack.success(listOfAddress)
+            },
+            Response.ErrorListener { error ->
+                // Handle errors
+                responseCallBack.failure(error.toString())
+            }){
+            override fun getHeaders(): MutableMap<String, String> {
+                val header =HashMap<String,String>()
+                header[CONTENT_TYPE]= APPLICATION_JSON
+                return super.getHeaders()
+            }
+
+
+        }
+        requestQueue.add(jsonRequest)
+    }
 
 
     companion object{
         const val BASE_URL =" http://10.0.2.2/myshop/index.php/"
+        const val BASE_USER_LIST_ADDRESS="User/addresses"
         const val BASE_LOGIN ="User/auth"
         const val BASE_CATEGORY ="Category"
         const val BASE_SUBCATEGORY ="SubCategory"

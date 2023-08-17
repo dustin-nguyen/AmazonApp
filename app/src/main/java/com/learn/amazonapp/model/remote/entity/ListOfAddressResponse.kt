@@ -1,7 +1,7 @@
 package com.learn.amazonapp.model.remote.entity
 
-data class ProductResponse(
+data class ListOfAddressResponse(
+    val addresses: List<Address>,
     val message: String,
-    val product: ProductDetail,
     val status: Int
 )
