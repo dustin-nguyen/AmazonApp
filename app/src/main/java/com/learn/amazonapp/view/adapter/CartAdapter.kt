@@ -51,8 +51,6 @@ class CartAdapter(val listOfItem: List<ProductInCart>, val cartPresenter: CartPr
                 tvName.text = product.product.product_name
                 tvBody.text = product.product.description
                 tvPrice.text = "$ ${product.product.price}"
-                //Picasso.get().load(URL_IMAGE+category.category_image_url).into(binding.imgCategory)
-
             }
             setupButton(product)
 
@@ -60,26 +58,22 @@ class CartAdapter(val listOfItem: List<ProductInCart>, val cartPresenter: CartPr
 
         private fun setupButton(product: ProductInCart) {
             binding.btnIncrease.setOnClickListener {
-                val currentValue = binding.tvQuantity.text.toString().toInt()+1
-                binding.tvQuantity.setText(currentValue.toString())
-                updateTotalPrice(product)
+                val currentValue = binding.tvQuantity.text.toString().toInt()
                 product.quantity=(currentValue + 1)
+                binding.tvQuantity.setText(product.quantity.toString())
+                updateTotalPrice(product)
                 cartPresenter.updateTotalPrice(product.product.price.toInt())
                 cartCommunicator.updateList(product)
-
             }
             binding.btnDecrease.setOnClickListener {
                 val currentValue = binding.tvQuantity.text.toString().toInt()
                 if(currentValue>0){
-                    binding.tvQuantity.setText((currentValue - 1).toString())
                     product.quantity=(currentValue - 1)
+                    binding.tvQuantity.setText(product.quantity.toString())
                     updateTotalPrice(product)
                     cartPresenter.updateTotalPrice(-product.product.price.toInt())
                     cartCommunicator.updateList(product)
                 }
-
-
-
             }
         }
         private fun updateTotalPrice(product: ProductInCart){
@@ -89,9 +83,5 @@ class CartAdapter(val listOfItem: List<ProductInCart>, val cartPresenter: CartPr
             product.amount=totalPrice
         }
 
-    }
-
-    companion object {
-        const val URL_IMAGE = "http://10.0.2.2/myshop/images/"
     }
 }
