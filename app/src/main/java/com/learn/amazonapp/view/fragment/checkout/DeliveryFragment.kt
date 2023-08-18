@@ -8,27 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.learn.amazonapp.R
 import com.learn.amazonapp.databinding.FragmentDeliveryBinding
-import com.learn.amazonapp.databinding.FragmentShowItemBinding
 import com.learn.amazonapp.model.remote.VolleyHandler
 import com.learn.amazonapp.model.remote.entity.Address
-import com.learn.amazonapp.presenter.ListOfItem.ShowItemPresenter
+import com.learn.amazonapp.presenter.checkout.CheckoutPresenter
 import com.learn.amazonapp.presenter.checkout.DeliveryContract
 import com.learn.amazonapp.presenter.checkout.DeliveryPresenter
-import com.learn.amazonapp.view.adapter.ShowItemAdapter
 import com.learn.amazonapp.view.adapter.checkout.DeliveryAdapter
 
 
-class DeliveryFragment : Fragment(),DeliveryContract.IDeliveryView {
+class DeliveryFragment(
+    val checkoutFragment: CheckoutCommunicator,
+    val checkoutPresenter: CheckoutPresenter)
+    : Fragment(),DeliveryContract.IDeliveryView {
+
     lateinit var binding: FragmentDeliveryBinding
     lateinit var deliveryAdapter: DeliveryAdapter
     lateinit var listOfAddress: List<Address>
     lateinit var deliveryPresenter: DeliveryPresenter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +56,23 @@ class DeliveryFragment : Fragment(),DeliveryContract.IDeliveryView {
     private fun setup() {
         intiPresenter()
         deliveryPresenter.getListOfAddressWithCurrentUser()
+        setupBtn()
     }
+
+    private fun setupBtn() {
+        binding.btnNext.setOnClickListener {
+            val selectedAddress = deliveryAdapter.getSelectedAddress()
+            if (selectedAddress != null) {
+                checkoutPresenter.address=selectedAddress
+                checkoutFragment.onNextButtonClicked()
+                makeToast("Selected Address: ${selectedAddress.title}, ${selectedAddress.address}")
+            } else {
+                makeToast("Please select an address")
+            }
+
+        }
+    }
+
     private fun setupRecyclerView(){
         binding.rvAddress.layoutManager=
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
@@ -73,11 +86,5 @@ class DeliveryFragment : Fragment(),DeliveryContract.IDeliveryView {
     }
     fun makeToast(message: String) {
         Toast.makeText(requireContext(),message, Toast.LENGTH_SHORT).show()
-    }
-
-
-
-    companion object {
-
     }
 }

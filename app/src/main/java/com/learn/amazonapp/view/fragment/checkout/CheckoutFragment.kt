@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
 import com.learn.amazonapp.databinding.FragmentCheckoutBinding
+import com.learn.amazonapp.presenter.checkout.CheckoutPresenter
 import com.learn.amazonapp.view.adapter.checkout.CheckoutViewPageAdapter
 
 class CheckoutFragment : Fragment(),CheckoutCommunicator {
@@ -14,6 +15,7 @@ class CheckoutFragment : Fragment(),CheckoutCommunicator {
     private lateinit var viewPageAdapter: CheckoutViewPageAdapter
     private lateinit var tabTitles:MutableList<String>
     private lateinit var fragments:MutableList<Fragment>
+    private lateinit var checkoutPresenter: CheckoutPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +36,20 @@ class CheckoutFragment : Fragment(),CheckoutCommunicator {
     }
 
     private fun setup() {
+        initPresenter()
         setupWebViewTab()
     }
+
+    private fun initPresenter() {
+        checkoutPresenter= CheckoutPresenter()
+    }
+
     private fun setupWebViewTab() {
-        fragments= mutableListOf<Fragment>(CartWebviewFragment(this),DeliveryFragment(),PaymentFragment(),SummaryFragment())
+        fragments= mutableListOf<Fragment>(
+            CartWebviewFragment(this,checkoutPresenter),
+            DeliveryFragment(this,checkoutPresenter),
+            PaymentFragment(this,checkoutPresenter),
+            SummaryFragment(checkoutPresenter))
         tabTitles = mutableListOf<String>("Cart items","Delivery","Payment","Summary") // List to store tab titles
 
 

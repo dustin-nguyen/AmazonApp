@@ -12,9 +12,13 @@ import com.learn.amazonapp.databinding.FragmentCartWebviewBinding
 import com.learn.amazonapp.model.ProductInCart
 import com.learn.amazonapp.presenter.checkout.CartCheckoutContract
 import com.learn.amazonapp.presenter.checkout.CartCheckoutPresenter
+import com.learn.amazonapp.presenter.checkout.CheckoutPresenter
 import com.learn.amazonapp.view.adapter.checkout.CartWebviewAdapter
 
-class CartWebviewFragment(val checkoutFragmentCallBack:CheckoutCommunicator) : Fragment(),CartCheckoutContract.ICartCheckoutFragmentView {
+class CartWebviewFragment(
+    val checkoutFragmentCallBack: CheckoutCommunicator,
+    val checkoutPresenter: CheckoutPresenter
+) : Fragment(),CartCheckoutContract.ICartCheckoutFragmentView {
     lateinit var binding:FragmentCartWebviewBinding
     lateinit var listOfItem: List<ProductInCart>
     lateinit var cartPresenter: CartCheckoutPresenter
@@ -43,6 +47,7 @@ class CartWebviewFragment(val checkoutFragmentCallBack:CheckoutCommunicator) : F
 
     override fun getListOfItemSuccess(listOfProduct: ArrayList<ProductInCart>) {
         listOfItem=listOfProduct
+        checkoutPresenter.listOfProductInCart=listOfItem
         setupRecyclerView()
     }
 
@@ -62,6 +67,8 @@ class CartWebviewFragment(val checkoutFragmentCallBack:CheckoutCommunicator) : F
 
     private fun setupNextBtn() {
         binding.btnNext.setOnClickListener {
+            checkoutPresenter.totalPrice=binding.tvTotalBill.text.toString().toInt()
+            checkoutPresenter.listOfProductInCart=listOfItem
             checkoutFragmentCallBack.onNextButtonClicked()
         }
     }
@@ -80,9 +87,6 @@ class CartWebviewFragment(val checkoutFragmentCallBack:CheckoutCommunicator) : F
         cartAdapter.setOnProductSelectedListener { product, i ->
             makeToast(product.toString())
         }
-
-
-
     }
     fun makeToast(message: String) {
         Toast.makeText(requireContext(),message, Toast.LENGTH_SHORT).show()
