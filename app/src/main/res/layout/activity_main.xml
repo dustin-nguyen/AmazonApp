@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end">
                 <TextView
-                    style="@style/PrimaryText"
+                    style="@style/MenuText"
                     android:textStyle="bold"
                     android:text="Amazon App"
                     android:layout_width="wrap_content"

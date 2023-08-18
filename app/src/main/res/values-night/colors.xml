@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="palette_orange2">#BE1F14</color>
-    <color name="text_primary">#DF2517</color>
+
+
+    <color name="button_primary">@color/palette_gray</color>
+    <color name="button_text_primary">@color/palette_orange</color>
+
+
+    <color name="drawer_header_background">@color/palette_gray</color>
+    <color name="drawer_header_text">@color/palette_orange</color>
+
+    <color name="menu_background">@color/palette_gray</color>
+    <color name="menu_text">@color/palette_orange</color>
+
+    <color name="text_primary">#FFFFFF</color>
 </resources>
