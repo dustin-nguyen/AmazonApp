@@ -6,17 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
-import com.learn.amazonapp.R
 import com.learn.amazonapp.databinding.FragmentCheckoutBinding
-import com.learn.amazonapp.databinding.FragmentSubCatBinding
-import com.learn.amazonapp.model.remote.entity.Subcategory
-import com.learn.amazonapp.view.adapter.SubCatViewPageAdapter
 import com.learn.amazonapp.view.adapter.checkout.CheckoutViewPageAdapter
-import com.learn.amazonapp.view.fragment.ShowItemFragment
 
-class CheckoutFragment : Fragment() {
+class CheckoutFragment : Fragment(),CheckoutCommunicator {
     private lateinit var binding: FragmentCheckoutBinding
     private lateinit var viewPageAdapter: CheckoutViewPageAdapter
+    private lateinit var tabTitles:MutableList<String>
+    private lateinit var fragments:MutableList<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +37,8 @@ class CheckoutFragment : Fragment() {
         setupWebViewTab()
     }
     private fun setupWebViewTab() {
-        val fragments= mutableListOf<Fragment>(CartWebviewFragment(),DeliveryFragment(),PaymentFragment(),SummaryFragment())
-        val tabTitles = mutableListOf<String>("Cart items","Delivery","Payment","Summary") // List to store tab titles
+        fragments= mutableListOf<Fragment>(CartWebviewFragment(this),DeliveryFragment(),PaymentFragment(),SummaryFragment())
+        tabTitles = mutableListOf<String>("Cart items","Delivery","Payment","Summary") // List to store tab titles
 
 
         viewPageAdapter = CheckoutViewPageAdapter(fragments,requireActivity())
@@ -54,8 +51,18 @@ class CheckoutFragment : Fragment() {
             }.attach()
         }
     }
-
-    companion object {
-
+    private fun moveToNextFragment() {
+        // Navigate to the next fragment using the ViewPager logic
+        val currentTabIndex = binding.tabLayout.selectedTabPosition
+        val nextTabIndex = currentTabIndex + 1
+        if (nextTabIndex < tabTitles.size) {
+            binding.viewPage.setCurrentItem(nextTabIndex, true)
+        }
     }
+
+    override fun onNextButtonClicked() {
+        moveToNextFragment()
+    }
+
+
 }
