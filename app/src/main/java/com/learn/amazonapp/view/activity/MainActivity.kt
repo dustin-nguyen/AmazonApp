@@ -47,11 +47,9 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
         binding.tvTitle.text=title
     }
 
-    override fun onStop() {
-        super.onStop()
-
-        //unregisterReceiver(cartPresenter)
-
+    override fun onDestroy() {
+        super.onDestroy()
+      //  unregisterReceiver(cartPresenter)
     }
     override fun onBackPressed() {
         if(supportFragmentManager.backStackEntryCount>0){
