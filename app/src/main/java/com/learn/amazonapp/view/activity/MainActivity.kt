@@ -5,9 +5,13 @@ import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Switch
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.material.navigation.NavigationView
 import com.learn.amazonapp.Constant.PRODUCT_KEY
 import com.learn.amazonapp.Constant.TO_CART_ACTION
 import com.learn.amazonapp.R
@@ -25,6 +29,7 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
     private lateinit var mainActivityPresenter: MainActivityPresenter
     private lateinit var localBroadCastManager :LocalBroadcastManager
     private lateinit var cartPresenter: CartPresenter
+    private var isReceiverRegistered = false
 
 
 
@@ -42,9 +47,9 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
         binding.tvTitle.text=title
     }
 
-    override fun onStop() {
-        super.onStop()
-        unregisterReceiver(cartPresenter)
+    override fun onDestroy() {
+        super.onDestroy()
+      //  unregisterReceiver(cartPresenter)
     }
     override fun onBackPressed() {
         if(supportFragmentManager.backStackEntryCount>0){
@@ -57,13 +62,14 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        registerLocalBroadCastRecevier()
         setup()
     }
 
     private fun setup() {
         initPresenter()
-        registerLocalBroadCastRecevier()
         setupDrawer()
+        setupHeader()
         handleMenuEvent(HOME,HomeFragment())
     }
 
@@ -107,8 +113,23 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
         localBroadCastManager.registerReceiver(
             cartPresenter, IntentFilter(TO_CART_ACTION)
         )
+        isReceiverRegistered = true
 
     }
+    private fun setupHeader(){
+        val navigationView =findViewById<NavigationView>(R.id.navViews)
+        val headerView= navigationView.getHeaderView(0)
+        val switch=headerView.findViewById<SwitchCompat>(R.id.switchTheme)
+         switch.setOnCheckedChangeListener { compoundButton, isChecked ->
+             AppCompatDelegate.setDefaultNightMode(
+                 if(isChecked)
+                    AppCompatDelegate.MODE_NIGHT_YES
+                 else
+                    AppCompatDelegate.MODE_NIGHT_NO
+             )
+         }
+    }
+
     companion object{
         const val HOME="HOME"
         const val CART_TITLE="Cart"

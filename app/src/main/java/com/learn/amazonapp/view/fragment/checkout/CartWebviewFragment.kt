@@ -8,26 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.learn.amazonapp.R
-import com.learn.amazonapp.databinding.FragmentCartBinding
 import com.learn.amazonapp.databinding.FragmentCartWebviewBinding
-import com.learn.amazonapp.databinding.ViewHolderCartCheckoutBinding
 import com.learn.amazonapp.model.ProductInCart
-import com.learn.amazonapp.presenter.cart.CartPresenter
 import com.learn.amazonapp.presenter.checkout.CartCheckoutContract
 import com.learn.amazonapp.presenter.checkout.CartCheckoutPresenter
-import com.learn.amazonapp.view.adapter.CartAdapter
+import com.learn.amazonapp.presenter.checkout.CheckoutPresenter
 import com.learn.amazonapp.view.adapter.checkout.CartWebviewAdapter
 
-class CartWebviewFragment : Fragment(),CartCheckoutContract.ICartCheckoutFragmentView {
+class CartWebviewFragment(
+    val checkoutFragmentCallBack: CheckoutCommunicator,
+    val checkoutPresenter: CheckoutPresenter
+) : Fragment(),CartCheckoutContract.ICartCheckoutFragmentView {
     lateinit var binding:FragmentCartWebviewBinding
     lateinit var listOfItem: List<ProductInCart>
     lateinit var cartPresenter: CartCheckoutPresenter
     lateinit var cartAdapter: CartWebviewAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +47,7 @@ class CartWebviewFragment : Fragment(),CartCheckoutContract.ICartCheckoutFragmen
 
     override fun getListOfItemSuccess(listOfProduct: ArrayList<ProductInCart>) {
         listOfItem=listOfProduct
+        checkoutPresenter.listOfProductInCart=listOfItem
         setupRecyclerView()
     }
 
@@ -65,7 +62,17 @@ class CartWebviewFragment : Fragment(),CartCheckoutContract.ICartCheckoutFragmen
         intiPresenter()
         cartPresenter.setTotalPrice()
         cartPresenter.getAllItemInCart()
+        setupNextBtn()
     }
+
+    private fun setupNextBtn() {
+        binding.btnNext.setOnClickListener {
+            checkoutPresenter.totalPrice=binding.tvTotalBill.text.toString().toInt()
+            checkoutPresenter.listOfProductInCart=listOfItem
+            checkoutFragmentCallBack.onNextButtonClicked()
+        }
+    }
+
     private fun intiPresenter() {
         cartPresenter= CartCheckoutPresenter(this)
 
@@ -80,9 +87,6 @@ class CartWebviewFragment : Fragment(),CartCheckoutContract.ICartCheckoutFragmen
         cartAdapter.setOnProductSelectedListener { product, i ->
             makeToast(product.toString())
         }
-
-
-
     }
     fun makeToast(message: String) {
         Toast.makeText(requireContext(),message, Toast.LENGTH_SHORT).show()

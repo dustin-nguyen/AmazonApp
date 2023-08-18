@@ -22,16 +22,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end">
                 <TextView
-                    style="@style/PrimaryText"
+                    style="@style/MenuText"
                     android:textStyle="bold"
                     android:text="Amazon App"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_title"
-                    android:layout_margin="@dimen/margin_20dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>

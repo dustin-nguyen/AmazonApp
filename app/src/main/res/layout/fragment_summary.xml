@@ -1,14 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.checkout.SummaryFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_margin="@dimen/margin_20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cart items"
+            android:id="@+id/tv_cart_title"
+            style="@style/PrimaryText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            tools:listitem="@layout/view_holder_cart_checkout"
+            android:id="@+id/rv_item"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            tools:itemCount="2"
+            app:layout_constraintTop_toBottomOf="@id/tv_cart_title"
+            />
+
+        <TextView
+            android:layout_margin="@dimen/margin_20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Bill"
+            style="@style/PrimaryText"
+            android:id="@+id/tv_total_bill_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_item" />
+        <TextView
+            android:layout_marginVertical="@dimen/_20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$"
+            style="@style/PrimaryText"
+            android:textColor="@color/palette_orange"
+            app:layout_constraintTop_toBottomOf="@id/rv_item"
+            app:layout_constraintEnd_toStartOf="@id/tv_total_bill"
+            />
+        <TextView
+            android:layout_margin="@dimen/margin_20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/tv_total_bill"
+            style="@style/PrimaryText"
+            android:textColor="@color/palette_orange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_item"/>
+        <View
+            app:layout_constraintTop_toBottomOf="@id/tv_total_bill"
+            app:layout_constraintBottom_toTopOf="@id/tv_delivery_title"
+            android:id="@+id/breakline_totalbill"
+            android:background="@color/text_primary"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            android:layout_margin="@dimen/margin_20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delivery Address"
+            android:id="@+id/tv_delivery_title"
+            style="@style/PrimaryText"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_bill_title"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:layout_margin="@dimen/margin_20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="address items"
+            android:id="@+id/tv_delivery"
+            style="@style/PrimaryText"
+            app:layout_constraintTop_toBottomOf="@id/tv_delivery_title"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <View
+            app:layout_constraintTop_toBottomOf="@id/tv_delivery"
+            app:layout_constraintBottom_toTopOf="@id/tv_payment_title"
+            android:id="@+id/breakline_payment"
+            android:background="@color/text_primary"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            android:layout_margin="@dimen/margin_20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment Option"
+            android:id="@+id/tv_payment_title"
+            style="@style/PrimaryText"
+            app:layout_constraintTop_toBottomOf="@id/tv_delivery"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:layout_margin="@dimen/margin_20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment "
+            android:id="@+id/tv_payment"
+            style="@style/PrimaryText"
+            app:layout_constraintTop_toBottomOf="@id/tv_payment_title"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_payment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Confirm And Place Order"
+            android:id="@+id/btn_place_order"
+            style="@style/PrimaryButton"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

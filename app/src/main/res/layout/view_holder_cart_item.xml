@@ -12,12 +12,13 @@
         android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_margin="@dimen/_20dp"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
+            android:src="@drawable/baseline_smartphone_24"
+            android:layout_width="@dimen/thumbnail_width"
+            android:layout_height="@dimen/thumbnail_height"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/img_item"
-            android:src="@drawable/ic_launcher_background"/>
+            />
         <TextView
             android:textColor="@color/palette_orange"
             android:layout_margin="@dimen/_20dp"
@@ -36,13 +37,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-
             app:layout_constraintEnd_toEndOf="parent"
             android:text="Total Price"
             android:id="@+id/tv_total_price"/>
 
         <TextView
-
             android:layout_margin="@dimen/_20dp"
             style="@style/PrimaryText"
             android:layout_width="0dp"
@@ -52,6 +51,7 @@
             app:layout_constraintStart_toEndOf="@id/img_item"
             android:text="Body"
             android:id="@+id/tv_body"/>
+
         <TextView
             android:textColor="@color/palette_orange"
             android:layout_margin="@dimen/_20dp"
@@ -63,6 +63,7 @@
             app:layout_constraintStart_toEndOf="@id/img_item"
             android:text="Price"
             android:id="@+id/tv_price"/>
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:orientation="horizontal"
             android:layout_margin="@dimen/_20dp"

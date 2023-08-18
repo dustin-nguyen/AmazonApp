@@ -3,11 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/drawer_header_background"
-    >
+    android:background="@drawable/drawer_header_background">
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/PrimaryText"
-
         android:text="Name"
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
@@ -26,5 +24,15 @@
         app:layout_constraintTop_toBottomOf="@id/tv_name"
         app:layout_constraintStart_toStartOf="parent"
         />
+    <androidx.appcompat.widget.SwitchCompat
+        android:layout_margin="@dimen/margin_20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Switch theme"
+        android:id="@+id/switchTheme"
+        android:textColor="@color/text_primary"
+        app:layout_constraintTop_toBottomOf="@id/tv_email"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,12 +12,12 @@
         android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_margin="@dimen/_20dp"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
+            android:src="@drawable/baseline_smartphone_24"
+            android:layout_width="@dimen/thumbnail_width"
+            android:layout_height="@dimen/thumbnail_height"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/img_item"
-            android:src="@drawable/ic_launcher_background"/>
+            android:id="@+id/img_item" />
         <TextView
             android:textColor="@color/palette_orange"
             android:layout_margin="@dimen/_20dp"

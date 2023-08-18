@@ -18,4 +18,8 @@
         <item name="android:textColor">@color/button_text_primary</item>
         <item name="android:textSize">@dimen/button_text_size</item>
     </style>
+    <style name="MenuText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/menu_text</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+    </style>
 </resources>

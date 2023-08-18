@@ -45,7 +45,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         tools:listitem="@layout/view_holder_cart_checkout"
         android:id="@+id/rv_item"
@@ -53,10 +52,9 @@
         android:layout_height="0dp"
         tools:itemCount="2"
         app:layout_constraintTop_toTopOf="@id/upper_guideLine"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-<!--        app:layout_constraintBottom_toTopOf="@id/btn_next"-->
+        app:layout_constraintBottom_toTopOf="@id/btn_next"
         />
-    <!--<androidx.appcompat.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_margin="@dimen/margin_20dp"
         style="@style/PrimaryButton"
         android:layout_width="@dimen/checkout_button_width"
@@ -65,6 +63,6 @@
         android:id="@+id/btn_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>-->
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

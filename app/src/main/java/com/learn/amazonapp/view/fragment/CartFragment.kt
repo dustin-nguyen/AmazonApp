@@ -50,7 +50,11 @@ class CartFragment : Fragment(), CartContract.ICartFragmentView,CartCommunicator
     }
 
     override fun updateList(product: ProductInCart) {
-        cartAdapter.notifyItemChanged(listOfItem.indexOf(product))
+        // bug here
+       /* val index =listOfItem.indexOf(product)
+        cartAdapter.notifyItemChanged(index)*/
+        // temp solution
+         cartAdapter.notifyDataSetChanged()
     }
 
     override fun onCreateView(
@@ -90,13 +94,6 @@ class CartFragment : Fragment(), CartContract.ICartFragmentView,CartCommunicator
 
         cartAdapter= CartAdapter(listOfItem,cartPresenter,this)
         binding.rvItem.adapter=cartAdapter
-
-        cartAdapter.setOnProductSelectedListener { product, i ->
-            makeToast(product.toString())
-        }
-
-
-
     }
     fun makeToast(message: String) {
         Toast.makeText(requireContext(),message, Toast.LENGTH_SHORT).show()

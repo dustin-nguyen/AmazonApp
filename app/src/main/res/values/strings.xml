@@ -10,4 +10,5 @@
     <string name="login">Login</string>
     <string name="SIGNUP">SIGNUP</string>
     <string name="option_menu_search">Search</string>
+    <string name="next_btn_text">Next</string>
 </resources>

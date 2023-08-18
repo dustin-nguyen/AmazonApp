@@ -6,9 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.learn.amazonapp.databinding.RadioItemBinding
 import com.learn.amazonapp.model.remote.entity.Address
 
-
-class DeliveryAdapter (val listOfItem: List<Address>):
-    RecyclerView.Adapter<DeliveryAdapter.RadioViewHolder>() {
+class PaymentAdapter(val listOfItem: List<String>):
+    RecyclerView.Adapter<PaymentAdapter.RadioViewHolder>() {
     private lateinit var binding: RadioItemBinding
     private var selectedPosition = RecyclerView.NO_POSITION
 
@@ -27,7 +26,7 @@ class DeliveryAdapter (val listOfItem: List<Address>):
         return listOfItem.size
     }
     // Method to get the selected address
-    fun getSelectedAddress(): Address? {
+    fun getSelectedPayMethod(): String? {
         return if (selectedPosition != RecyclerView.NO_POSITION) {
             listOfItem[selectedPosition]
         } else {
@@ -37,8 +36,8 @@ class DeliveryAdapter (val listOfItem: List<Address>):
 
     inner class RadioViewHolder(val binding: RadioItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(address: Address) {
-           binding.radioButton.text= "${address.title}\n${address.address}"
+        fun bind(payMethod: String) {
+            binding.radioButton.text= payMethod
             binding.radioButton.isChecked = selectedPosition == position
 
             binding.radioButton.setOnClickListener {
