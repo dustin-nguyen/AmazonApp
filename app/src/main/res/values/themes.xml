@@ -24,10 +24,15 @@
     </style>
     <style name="MenuText" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/menu_text</item>
-        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textSize">@dimen/menu_text</item>
+
     </style>
     <style name="HighLightedText" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/palette_orange</item>
         <item name="android:textSize">@dimen/button_text_size</item>
+    </style>
+
+    <style name="SearchIcon" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/baseline_search_24</item>
     </style>
 </resources>

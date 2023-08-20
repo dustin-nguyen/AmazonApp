@@ -34,6 +34,7 @@ import com.learn.amazonapp.model.remote.entity.CategoryResponse
 import com.learn.amazonapp.model.remote.entity.ListOfAddressResponse
 import com.learn.amazonapp.model.remote.entity.ListOfItemResponse
 import com.learn.amazonapp.model.remote.entity.LoginResponse
+import com.learn.amazonapp.model.remote.entity.LogoutResponse
 import com.learn.amazonapp.model.remote.entity.OrderResponse
 import com.learn.amazonapp.model.remote.entity.PlaceOrderResponse
 import com.learn.amazonapp.model.remote.entity.ProductResponse
@@ -270,8 +271,8 @@ class VolleyHandler(val context: Context)  {
     fun postPlaceOrder(productPlaceOrderObject:PlaceOrderObject, responseCallBack: ResponseCallBack){
         val requestQueue = Volley.newRequestQueue(context)
         val jsonObject = constructJSONObjectForPlaceOrder(productPlaceOrderObject)
-        Log.d("Response", jsonObject.toString())
         val url = "$BASE_URL$BASE_ORDER"
+
         val jsonRequest =object :JsonObjectRequest(Method.POST, url, jsonObject,
             Response.Listener { response ->
                 // Handle the response from the server
@@ -319,12 +320,41 @@ class VolleyHandler(val context: Context)  {
         requestQueue.add(jsonRequest)
     }
 
+    fun postLogout(email_id:String, responseCallBack: ResponseCallBack){
+        val requestQueue = Volley.newRequestQueue(context)
+        val jsonObject = JSONObject()
+        jsonObject.put(KEY_EMAIL_ID, email_id)
+
+
+        val url = "$BASE_URL$BASE_LOGOUT"
+        val jsonRequest =object :JsonObjectRequest(Method.POST, url, jsonObject,
+            Response.Listener { response ->
+                // Handle the response from the server
+                Log.d("Response", response.toString())
+                val typeToken = object : TypeToken<LogoutResponse>(){}
+                val addressResponse = Gson().fromJson(response.toString(),typeToken)
+                responseCallBack.success(addressResponse)
+            },
+            Response.ErrorListener { error ->
+                // Handle errors
+                responseCallBack.failure(error.toString())
+            }){
+            override fun getHeaders(): MutableMap<String, String> {
+                val header =HashMap<String,String>()
+                header[CONTENT_TYPE]= APPLICATION_JSON
+                return super.getHeaders()
+            }
+        }
+        requestQueue.add(jsonRequest)
+    }
+
 
     companion object{
         const val BASE_URL =" http://10.0.2.2/myshop/index.php/"
         const val BASE_USER_LIST_ADDRESS="User/addresses"
         const val BASE_USER_ADDRESS="User/address"
         const val BASE_LOGIN ="User/auth"
+        const val BASE_LOGOUT ="User/logout"
         const val BASE_CATEGORY ="Category"
         const val BASE_ORDER="Order"
         const val BASE_GET_ORDERS="Order/userOrders/"

@@ -21,15 +21,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end">
+
                 <TextView
+                    android:id="@+id/tv_title"
                     style="@style/MenuText"
-                    android:textStyle="bold"
-                    android:text="Amazon App"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_title"
+                    android:text="Amazon App"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_marginHorizontal="@dimen/margin_20dp"
+                    android:layout_width="@dimen/search_icon_width"
+                    android:layout_height="@dimen/search_icon_height"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    style="@style/SearchIcon"
+                    android:id="@+id/btn_search"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
