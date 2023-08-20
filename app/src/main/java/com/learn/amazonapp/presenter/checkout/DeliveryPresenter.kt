@@ -3,6 +3,8 @@ package com.learn.amazonapp.presenter.checkout
 import android.util.Log
 import com.learn.amazonapp.model.ResponseCallBack
 import com.learn.amazonapp.model.remote.VolleyHandler
+import com.learn.amazonapp.model.remote.entity.AddAddressResponse
+import com.learn.amazonapp.model.remote.entity.Address
 import com.learn.amazonapp.model.remote.entity.ListOfAddressResponse
 import com.learn.amazonapp.model.remote.entity.ListOfItemResponse
 import com.learn.amazonapp.presenter.ListOfItem.ShowItemFragmentContract
@@ -17,7 +19,7 @@ class DeliveryPresenter(private val volleyHandler: VolleyHandler,
         volleyHandler.getListOfAddressOfUser(userId,responseCallBack = object : ResponseCallBack {
             override fun success(getResponse: Any) {
                 getResponse as ListOfAddressResponse
-                Log.i(ShowItemPresenter.TAG,getResponse.toString())
+                Log.i(TAG,getResponse.toString())
                 deliveryFragment.getListOfItemSuccess(getResponse.addresses)
 
             }
@@ -33,10 +35,30 @@ class DeliveryPresenter(private val volleyHandler: VolleyHandler,
         val userId = securedSharedPreferences.getString(SharedPrefConstant.USER_ID,"") ?:""
 
         if(userId != "")
-            getListOfAddress("1")
+            getListOfAddress(userId)
         else
-            Log.e(ShowItemPresenter.TAG,"userId $userId")
+            Log.e(TAG,"userId $userId")
     }
+
+    override fun addAddress(address: Address) {
+        val securedSharedPreferences = SharedPrefConstant.getSecuredSharedPref(deliveryFragment.fragmentContext)
+        val userId = securedSharedPreferences.getString(SharedPrefConstant.USER_ID,"") ?:""
+
+        volleyHandler.addAddressForUser(userId,address,responseCallBack = object : ResponseCallBack {
+            override fun success(getResponse: Any) {
+                getResponse as AddAddressResponse
+                Log.i(TAG,getResponse.toString())
+                deliveryFragment.addAddressSuccess()
+
+            }
+
+            override fun failure(error: String) {
+                Log.i(TAG,error)
+                deliveryFragment.addAddressFail(error)
+            }
+        })
+    }
+
     companion object{
         const val TAG="DeliveryPresenter"
 

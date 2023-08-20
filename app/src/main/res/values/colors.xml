@@ -12,6 +12,7 @@
     <color name="button_text_primary">#FF000000</color>
 
     <color name="text_primary">#FF000000</color>
+    <color name="text_secondary">@color/palette_gray</color>
 
     <color name="drawer_header_background">@color/palette_orange</color>
     <color name="drawer_header_text">@color/black</color>

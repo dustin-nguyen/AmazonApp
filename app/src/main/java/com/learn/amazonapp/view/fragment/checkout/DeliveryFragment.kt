@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.learn.amazonapp.databinding.AddAddressFormBinding
 import com.learn.amazonapp.databinding.FragmentDeliveryBinding
 import com.learn.amazonapp.model.remote.VolleyHandler
 import com.learn.amazonapp.model.remote.entity.Address
@@ -52,6 +54,14 @@ class DeliveryFragment(
         makeToast(error)
     }
 
+    override fun addAddressSuccess() {
+        deliveryPresenter.getListOfAddressWithCurrentUser()
+    }
+
+    override fun addAddressFail(error: String) {
+        makeToast(error)
+    }
+
 
     private fun setup() {
         intiPresenter()
@@ -69,10 +79,22 @@ class DeliveryFragment(
             } else {
                 makeToast("Please select an address")
             }
-
+        }
+        binding.btnAddAddress.setOnClickListener {
+            addAddressDialog()
         }
     }
-
+    private fun addAddressDialog() {
+        val dialog = BottomSheetDialog(requireContext())
+        val bindingBottomSheetDialog = AddAddressFormBinding.inflate(layoutInflater)
+        dialog.setContentView(bindingBottomSheetDialog.root)
+        dialog.show()
+        bindingBottomSheetDialog.btnAddAddress.setOnClickListener {
+            val title=bindingBottomSheetDialog.etTitle.text.toString()
+            val body=bindingBottomSheetDialog.etBody.text.toString()
+            deliveryPresenter.addAddress(Address(address = body,"1",title=title))
+        }
+    }
     private fun setupRecyclerView(){
         binding.rvAddress.layoutManager=
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)

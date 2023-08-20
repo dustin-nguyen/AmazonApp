@@ -16,14 +16,29 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.learn.amazonapp.Constant.ADDRESS
+import com.learn.amazonapp.Constant.BILL_AMOUNT
+import com.learn.amazonapp.Constant.DELIVERY_ADDRESS
+import com.learn.amazonapp.Constant.ITEMS
+import com.learn.amazonapp.Constant.PAYMENT_METHOD
+import com.learn.amazonapp.Constant.PRODUCT_ID
+import com.learn.amazonapp.Constant.QUANTITY
+import com.learn.amazonapp.Constant.TITLE
+import com.learn.amazonapp.Constant.UNIT_PRICE
+import com.learn.amazonapp.Constant.USER_ID
+import com.learn.amazonapp.model.ProductInCart
 import com.learn.amazonapp.model.ResponseCallBack
+import com.learn.amazonapp.model.remote.entity.AddAddressResponse
+import com.learn.amazonapp.model.remote.entity.Address
 import com.learn.amazonapp.model.remote.entity.CategoryResponse
 import com.learn.amazonapp.model.remote.entity.ListOfAddressResponse
 import com.learn.amazonapp.model.remote.entity.ListOfItemResponse
 import com.learn.amazonapp.model.remote.entity.LoginResponse
+import com.learn.amazonapp.model.remote.entity.PlaceOrderResponse
 import com.learn.amazonapp.model.remote.entity.ProductResponse
 import com.learn.amazonapp.model.remote.entity.SubCatResponse
 import com.learn.amazonapp.model.remote.entity.Subcategory
+import org.json.JSONArray
 import org.json.JSONObject
 
 class VolleyHandler(val context: Context)  {
@@ -189,8 +204,90 @@ class VolleyHandler(val context: Context)  {
                 header[CONTENT_TYPE]= APPLICATION_JSON
                 return super.getHeaders()
             }
+        }
+        requestQueue.add(jsonRequest)
+    }
+    fun addAddressForUser(userid:String, address: Address, responseCallBack: ResponseCallBack){
+        val requestQueue = Volley.newRequestQueue(context)
+        val jsonObject = JSONObject()
+        jsonObject.put(USER_ID, userid)
+        jsonObject.put(TITLE, address.title)
+        jsonObject.put(ADDRESS, address.address)
+
+        val url = "$BASE_URL$BASE_USER_ADDRESS"
+        val jsonRequest =object :JsonObjectRequest(Method.POST, url, jsonObject,
+            Response.Listener { response ->
+                // Handle the response from the server
+                Log.d("Response", response.toString())
+                val typeToken = object : TypeToken<AddAddressResponse>(){}
+                val addressResponse = Gson().fromJson(response.toString(),typeToken)
+                responseCallBack.success(addressResponse)
+            },
+            Response.ErrorListener { error ->
+                // Handle errors
+                responseCallBack.failure(error.toString())
+            }){
+            override fun getHeaders(): MutableMap<String, String> {
+                val header =HashMap<String,String>()
+                header[CONTENT_TYPE]= APPLICATION_JSON
+                return super.getHeaders()
+            }
+        }
+        requestQueue.add(jsonRequest)
+    }
+    fun constructJSONObjectForPlaceOrder(productPlaceOrderObject: PlaceOrderObject):JSONObject{
+        val jsonObject = JSONObject()
+        jsonObject.put(USER_ID,productPlaceOrderObject.userid)
+
+        val addressJSONObject=JSONObject()
+        addressJSONObject.put(TITLE,productPlaceOrderObject.address.title)
+        addressJSONObject.put(TITLE, productPlaceOrderObject.address.title)
+        addressJSONObject.put(ADDRESS, productPlaceOrderObject.address.address)
+
+        jsonObject.put(DELIVERY_ADDRESS,addressJSONObject)
 
 
+        val itemJsonArray = JSONArray()
+
+        for (product in productPlaceOrderObject.listOfProduct) {
+            val itemObject = JSONObject()
+            itemObject.put(PRODUCT_ID, product.product.product_id)
+            itemObject.put(QUANTITY, product.quantity)
+            itemObject.put(UNIT_PRICE,product.product.price)
+            itemJsonArray.put(itemObject)
+        }
+
+        jsonObject.put(ITEMS,itemJsonArray)
+
+        jsonObject.put(BILL_AMOUNT,productPlaceOrderObject.billAmount)
+        jsonObject.put(PAYMENT_METHOD,productPlaceOrderObject.payMethod)
+
+
+        return jsonObject
+
+    }
+    fun postPlaceOrder(productPlaceOrderObject:PlaceOrderObject, responseCallBack: ResponseCallBack){
+        val requestQueue = Volley.newRequestQueue(context)
+        val jsonObject = constructJSONObjectForPlaceOrder(productPlaceOrderObject)
+        Log.d("Response", jsonObject.toString())
+        val url = "$BASE_URL$BASE_ORDER"
+        val jsonRequest =object :JsonObjectRequest(Method.POST, url, jsonObject,
+            Response.Listener { response ->
+                // Handle the response from the server
+                Log.d("Response", response.toString())
+                val typeToken = object : TypeToken<PlaceOrderResponse>(){}
+                val addressResponse = Gson().fromJson(response.toString(),typeToken)
+                responseCallBack.success(addressResponse)
+            },
+            Response.ErrorListener { error ->
+                // Handle errors
+                responseCallBack.failure(error.toString())
+            }){
+            override fun getHeaders(): MutableMap<String, String> {
+                val header =HashMap<String,String>()
+                header[CONTENT_TYPE]= APPLICATION_JSON
+                return super.getHeaders()
+            }
         }
         requestQueue.add(jsonRequest)
     }
@@ -199,8 +296,10 @@ class VolleyHandler(val context: Context)  {
     companion object{
         const val BASE_URL =" http://10.0.2.2/myshop/index.php/"
         const val BASE_USER_LIST_ADDRESS="User/addresses"
+        const val BASE_USER_ADDRESS="User/address"
         const val BASE_LOGIN ="User/auth"
         const val BASE_CATEGORY ="Category"
+        const val BASE_ORDER="Order"
         const val BASE_SUBCATEGORY ="SubCategory"
         const val KEY_CATEGORY_ID="category_id"
         const val BASE_LIST_OF_ITEM="$BASE_URL$BASE_SUBCATEGORY/products"

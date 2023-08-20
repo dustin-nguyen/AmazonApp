@@ -18,8 +18,16 @@
         <item name="android:textColor">@color/button_text_primary</item>
         <item name="android:textSize">@dimen/button_text_size</item>
     </style>
+    <style name="SecondaryText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/text_secondary</item>
+    </style>
     <style name="MenuText" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/menu_text</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+    </style>
+    <style name="HighLightedText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/palette_orange</item>
         <item name="android:textSize">@dimen/button_text_size</item>
     </style>
 </resources>
