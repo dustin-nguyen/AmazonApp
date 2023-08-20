@@ -34,6 +34,7 @@ import com.learn.amazonapp.model.remote.entity.CategoryResponse
 import com.learn.amazonapp.model.remote.entity.ListOfAddressResponse
 import com.learn.amazonapp.model.remote.entity.ListOfItemResponse
 import com.learn.amazonapp.model.remote.entity.LoginResponse
+import com.learn.amazonapp.model.remote.entity.OrderResponse
 import com.learn.amazonapp.model.remote.entity.PlaceOrderResponse
 import com.learn.amazonapp.model.remote.entity.ProductResponse
 import com.learn.amazonapp.model.remote.entity.SubCatResponse
@@ -292,6 +293,32 @@ class VolleyHandler(val context: Context)  {
         requestQueue.add(jsonRequest)
     }
 
+    fun getOrders(userid: String, responseCallBack: ResponseCallBack){
+        val requestQueue = Volley.newRequestQueue(context)
+        val jsonObject = JSONObject()
+
+        val url = "$BASE_URL$BASE_GET_ORDERS$userid"
+        val jsonRequest =object :JsonObjectRequest(Method.GET, url, jsonObject,
+            Response.Listener { response ->
+                // Handle the response from the server
+                Log.d("Response", response.toString())
+                val typeToken = object : TypeToken<OrderResponse>(){}
+                val orderResponse = Gson().fromJson(response.toString(),typeToken)
+                responseCallBack.success(orderResponse)
+            },
+            Response.ErrorListener { error ->
+                // Handle errors
+                responseCallBack.failure(error.toString())
+            }){
+            override fun getHeaders(): MutableMap<String, String> {
+                val header =HashMap<String,String>()
+                header[CONTENT_TYPE]= APPLICATION_JSON
+                return super.getHeaders()
+            }
+        }
+        requestQueue.add(jsonRequest)
+    }
+
 
     companion object{
         const val BASE_URL =" http://10.0.2.2/myshop/index.php/"
@@ -300,6 +327,7 @@ class VolleyHandler(val context: Context)  {
         const val BASE_LOGIN ="User/auth"
         const val BASE_CATEGORY ="Category"
         const val BASE_ORDER="Order"
+        const val BASE_GET_ORDERS="Order/userOrders/"
         const val BASE_SUBCATEGORY ="SubCategory"
         const val KEY_CATEGORY_ID="category_id"
         const val BASE_LIST_OF_ITEM="$BASE_URL$BASE_SUBCATEGORY/products"

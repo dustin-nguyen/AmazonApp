@@ -46,7 +46,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
 
-    <!-- TODO: Update blank fragment layout -->
+
     <androidx.recyclerview.widget.RecyclerView
         tools:listitem="@layout/view_holder_cart_item"
         android:id="@+id/rv_item"

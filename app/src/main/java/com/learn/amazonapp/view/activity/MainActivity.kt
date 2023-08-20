@@ -23,6 +23,7 @@ import com.learn.amazonapp.presenter.main.MainActivityPresenter
 import com.learn.amazonapp.view.HomeCommunicator
 import com.learn.amazonapp.view.fragment.CartFragment
 import com.learn.amazonapp.view.fragment.HomeFragment
+import com.learn.amazonapp.view.fragment.ListOfOrderFragment
 
 class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.IMainActivityView {
     private lateinit var binding: ActivityMainBinding
@@ -87,6 +88,7 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
             when(menuItems.itemId){
                 R.id.home -> handleMenuEvent(HOME,HomeFragment())
                 R.id.cart -> handleMenuEvent(CART_TITLE,CartFragment())
+                R.id.orders-> handleMenuEvent(ORDERS, ListOfOrderFragment())
             }
             true
         }
@@ -133,6 +135,7 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
     companion object{
         const val HOME="HOME"
         const val CART_TITLE="Cart"
+        const val ORDERS="Orders"
     }
 
 

@@ -13,14 +13,10 @@ import com.learn.amazonapp.databinding.FragmentCartWebviewBinding
 import com.learn.amazonapp.databinding.FragmentSummaryBinding
 import com.learn.amazonapp.model.ProductInCart
 import com.learn.amazonapp.model.remote.entity.Address
-import com.learn.amazonapp.presenter.LoginFragmentPresenter
-import com.learn.amazonapp.presenter.checkout.CartCheckoutPresenter
 import com.learn.amazonapp.presenter.checkout.CheckoutPresenter
 import com.learn.amazonapp.presenter.checkout.SummaryContract
 import com.learn.amazonapp.presenter.checkout.SummaryPresenter
 import com.learn.amazonapp.view.HomeCommunicator
-import com.learn.amazonapp.view.LoginCommunicator
-import com.learn.amazonapp.view.adapter.checkout.CartWebviewAdapter
 import com.learn.amazonapp.view.adapter.checkout.SummaryAdapter
 
 class SummaryFragment(
@@ -88,7 +84,6 @@ class SummaryFragment(
     }
     private fun intiPresenter() {
         summaryPresenter= SummaryPresenter(checkoutPresenter,this)
-
     }
     private fun setupRecyclerView(){
         binding.rvItem.layoutManager=
