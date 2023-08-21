@@ -13,4 +13,5 @@
     <color name="menu_text">@color/palette_orange</color>
 
     <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">@color/white</color>
 </resources>

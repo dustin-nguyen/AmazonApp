@@ -14,10 +14,8 @@ object SharedPrefConstant {
     const val USER_ID="user_id"
     const val FULL_NAME="full_name"
 
-
     fun getSecuredSharedPref(context: Context): SharedPreferences {
         val masterKeys =MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
-
         return EncryptedSharedPreferences.create(
             SECURED_PREF_FILE_NAME,
             masterKeys,context,

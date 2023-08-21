@@ -11,24 +11,23 @@ import com.learn.amazonapp.presenter.home.HomeFragmentContract
 import com.learn.amazonapp.presenter.home.HomeFragmentPresenter
 
 class SubCatPresenter(
-                      private val volleyHandler: VolleyHandler,
-                      private val subCatFragment: SubCatFragmentContract.ISubCatFragmentView):SubCatFragmentContract.ISubCatFragmentPresenter {
+    private val volleyHandler: VolleyHandler,
+    private val subCatFragment: SubCatFragmentContract.ISubCatFragmentView)
+    : SubCatFragmentContract.ISubCatFragmentPresenter {
     override fun getListOfSubCategory(id: String) {
         volleyHandler.getSubCategoryById(id,responseCallBack = object : ResponseCallBack {
             override fun success(getResponse: Any) {
                 getResponse as SubCatResponse
                 Log.i(TAG,getResponse.toString())
                 subCatFragment.getListOfSubCategorySuccess(getResponse.subcategories)
-
-
             }
-
             override fun failure(error: String) {
                 Log.i(TAG,error)
                 subCatFragment.getListOfSubCategoryFail(error)
             }
         })
     }
+
     companion object{
         const val TAG="SubCatPresenter"
         const val RESPONSE_OKAY=1

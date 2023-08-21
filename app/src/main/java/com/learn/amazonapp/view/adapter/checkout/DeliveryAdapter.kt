@@ -7,8 +7,9 @@ import com.learn.amazonapp.databinding.RadioItemBinding
 import com.learn.amazonapp.model.remote.entity.Address
 
 
-class DeliveryAdapter (val listOfItem: List<Address>):
-    RecyclerView.Adapter<DeliveryAdapter.RadioViewHolder>() {
+class DeliveryAdapter (val listOfItem: List<Address>)
+    : RecyclerView.Adapter<DeliveryAdapter.RadioViewHolder>() {
+
     private lateinit var binding: RadioItemBinding
     private var selectedPosition = RecyclerView.NO_POSITION
 
@@ -47,6 +48,5 @@ class DeliveryAdapter (val listOfItem: List<Address>):
             }
 
         }
-
     }
 }

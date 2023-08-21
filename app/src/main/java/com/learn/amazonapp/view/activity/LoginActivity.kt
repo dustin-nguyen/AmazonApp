@@ -23,12 +23,14 @@ class LoginActivity : AppCompatActivity(),LoginCommunicator,LoginActivityContrac
         else
             super.onBackPressed()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setup()
     }
+
     override fun setMessage(message: String) {
         binding.btnChangeFragment.text=message
     }
@@ -45,12 +47,10 @@ class LoginActivity : AppCompatActivity(),LoginCommunicator,LoginActivityContrac
         handleMenuEvent(SIGNUP, SignupFragment())
     }
 
-
     private fun setup() {
         displayLoginFragment()
         setupSwitchFragmentButton()
         initPresenter()
-
     }
 
     private fun initPresenter() {
@@ -66,7 +66,6 @@ class LoginActivity : AppCompatActivity(),LoginCommunicator,LoginActivityContrac
                 loginActivityPresenter.decideFragmentEvent(btnChangeFragment.text.toString(), GO_TO_SIGNUP_TEXT_BUTTON)
 
             }
-
         }
     }
 
@@ -75,11 +74,13 @@ class LoginActivity : AppCompatActivity(),LoginCommunicator,LoginActivityContrac
             .replace(R.id.fragment_container,fragment)
             .addToBackStack(backStackEntryName).commit()
     }
+
     private fun goToActivity( cls: Class<*> ){
         val dataIntent = Intent(this, cls)
         startActivity(dataIntent)
         finish()
     }
+
     companion object{
         const val TAG="LoginActivity"
         const val LOGIN="LOGIN"
@@ -87,7 +88,4 @@ class LoginActivity : AppCompatActivity(),LoginCommunicator,LoginActivityContrac
         const val GO_TO_LOGIN_TEXT_BUTTON="Click here to login."
         const val SIGNUP="SIGNUP"
     }
-
-
-
 }

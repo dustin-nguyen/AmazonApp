@@ -52,9 +52,15 @@ class LoginFragment : Fragment(),LoginFragmentContract.ILoginFragmentView {
     }
 
     private fun setup() {
+        initLoginCred()
         setButtonTextInParent()
         intiPresenter()
         setupLoginButton()
+    }
+
+    private fun initLoginCred() {
+        binding.etEmail.setText("test1@gmail.com")
+        binding.etPassword.setText("password123")
     }
 
     private fun setupLoginButton() {
@@ -62,7 +68,7 @@ class LoginFragment : Fragment(),LoginFragmentContract.ILoginFragmentView {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
 
-            loginFragmentPresenter.login("test1@gmail.com","password123")
+            loginFragmentPresenter.login(email,password)
         }
     }
 

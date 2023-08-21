@@ -5,11 +5,12 @@ import com.learn.amazonapp.presenter.cart.CartPresenter
 
 class CartCheckoutPresenter(
     var cartCheckoutFragmentView: CartCheckoutContract.ICartCheckoutFragmentView)
-    :CartCheckoutContract.ICartCheckoutPresenter {
+    : CartCheckoutContract.ICartCheckoutPresenter {
+
     private val cartPresenter= CartPresenter()
+
     override fun getAllItemInCart() {
         cartCheckoutFragmentView.getListOfItemSuccess(cartPresenter.getAllInCart())
-
     }
 
     override fun getTotalPrice(): Int {
@@ -19,6 +20,4 @@ class CartCheckoutPresenter(
     override fun setTotalPrice() {
         cartCheckoutFragmentView.getTotalPriceSuccess(getTotalPrice())
     }
-
-
 }

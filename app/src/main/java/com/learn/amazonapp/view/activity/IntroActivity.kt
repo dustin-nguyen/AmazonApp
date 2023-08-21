@@ -24,6 +24,7 @@ class IntroActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         return super.onCreateOptionsMenu(menu)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityIntroBinding.inflate(layoutInflater)
@@ -37,28 +38,25 @@ class IntroActivity : AppCompatActivity() {
             val dataIntent = Intent(this@IntroActivity, LoginActivity::class.java)
             startActivity(dataIntent)
         }
-
     }
+
     fun setupWebview(){
         listOfFragment= listOf(Intro1Fragment(), Intro2Fragment(), Intro3Fragment())
         viewPageAdapter = IntroViewPageAdapter(listOfFragment,this@IntroActivity)
-
         with(binding){
-
             viewPager2.adapter =viewPageAdapter
             TabLayoutMediator(tabLayout,viewPager2){ tab, position ->
                 val tabBinding = CustomTabSelectorBinding.inflate(layoutInflater,tabLayout,false)
                 tab.customView=tabBinding.root
             }.attach()
-
             viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
                 override fun onPageSelected(position: Int) {
                     updateTabDots(position)
                 }
-            }
-            )
+            })
         }
     }
+
     private fun updateTabDots(selectedPosition: Int) {
         for (i in 0 until binding.tabLayout.tabCount) {
             val tabView = binding.tabLayout.getTabAt(i)?.customView
@@ -73,5 +71,4 @@ class IntroActivity : AppCompatActivity() {
             }
         }
     }
-
 }

@@ -1,11 +1,12 @@
 package com.learn.amazonapp.view.activity
 
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Switch
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.GravityCompat
@@ -16,6 +17,7 @@ import com.learn.amazonapp.Constant.PRODUCT_KEY
 import com.learn.amazonapp.Constant.TO_CART_ACTION
 import com.learn.amazonapp.R
 import com.learn.amazonapp.databinding.ActivityMainBinding
+import com.learn.amazonapp.model.remote.VolleyHandler
 import com.learn.amazonapp.model.remote.entity.Product
 import com.learn.amazonapp.presenter.cart.CartPresenter
 import com.learn.amazonapp.presenter.main.MainActivityContract
@@ -23,6 +25,7 @@ import com.learn.amazonapp.presenter.main.MainActivityPresenter
 import com.learn.amazonapp.view.HomeCommunicator
 import com.learn.amazonapp.view.fragment.CartFragment
 import com.learn.amazonapp.view.fragment.HomeFragment
+import com.learn.amazonapp.view.fragment.ListOfOrderFragment
 
 class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.IMainActivityView {
     private lateinit var binding: ActivityMainBinding
@@ -30,8 +33,6 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
     private lateinit var localBroadCastManager :LocalBroadcastManager
     private lateinit var cartPresenter: CartPresenter
     private var isReceiverRegistered = false
-
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home){
@@ -43,14 +44,36 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
         return super.onOptionsItemSelected(item)
     }
 
+    override var context: Context
+        get() = this
+        set(value) {}
+
     override fun setTitle(title: String) {
         binding.tvTitle.text=title
     }
 
+    override fun setNameAndEmail(username: String, email: String) {
+        val navigationView =findViewById<NavigationView>(R.id.navViews)
+        val headerView= navigationView.getHeaderView(0)
+        val emailView=headerView.findViewById<TextView>(R.id.tv_email)
+        val nameView=headerView.findViewById<TextView>(R.id.tv_name)
+
+        emailView.text = email
+        nameView.text = "Welcome $username"
+    }
+
+    override fun logout() {
+        val dataIntent = Intent(this, SplashScreenActivity::class.java)
+        startActivity(dataIntent)
+        finish()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        // not work with theme switch
       //  unregisterReceiver(cartPresenter)
     }
+
     override fun onBackPressed() {
         if(supportFragmentManager.backStackEntryCount>0){
             supportFragmentManager.popBackStackImmediate()
@@ -58,6 +81,7 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
         }else
             super.onBackPressed()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
@@ -71,10 +95,11 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
         setupDrawer()
         setupHeader()
         handleMenuEvent(HOME,HomeFragment())
+        mainActivityPresenter.setNameAndEmail()
     }
 
     private fun initPresenter() {
-        mainActivityPresenter= MainActivityPresenter(this)
+        mainActivityPresenter= MainActivityPresenter(VolleyHandler(this),this)
     }
 
     private fun setupDrawer(){
@@ -87,15 +112,19 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
             when(menuItems.itemId){
                 R.id.home -> handleMenuEvent(HOME,HomeFragment())
                 R.id.cart -> handleMenuEvent(CART_TITLE,CartFragment())
+                R.id.orders-> handleMenuEvent(ORDERS, ListOfOrderFragment())
+                R.id.logout -> mainActivityPresenter.logout()
             }
             true
         }
     }
+
     private fun handleMenuEvent(backStackEntryName:String,fragment: Fragment){
         binding.main.closeDrawer(GravityCompat.START)
         supportFragmentManager.beginTransaction().replace(R.id.parent,fragment).addToBackStack(backStackEntryName).commit()
         mainActivityPresenter.decideTitleBasedOnFragment(fragment)
     }
+
     override fun goToFragment(backStackEntryName:String,fragment: Fragment) {
         handleMenuEvent(backStackEntryName,fragment)
     }
@@ -108,7 +137,6 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
     private fun registerLocalBroadCastRecevier() {
         localBroadCastManager = LocalBroadcastManager.getInstance(this)
         cartPresenter= CartPresenter()
-
         // register receiver
         localBroadCastManager.registerReceiver(
             cartPresenter, IntentFilter(TO_CART_ACTION)
@@ -116,6 +144,7 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
         isReceiverRegistered = true
 
     }
+
     private fun setupHeader(){
         val navigationView =findViewById<NavigationView>(R.id.navViews)
         val headerView= navigationView.getHeaderView(0)
@@ -133,8 +162,6 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
     companion object{
         const val HOME="HOME"
         const val CART_TITLE="Cart"
+        const val ORDERS="Orders"
     }
-
-
-
 }

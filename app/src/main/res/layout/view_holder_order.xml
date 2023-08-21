@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/cardCornerRadius"
+    android:layout_margin="@dimen/_20dp"
+    app:cardElevation="@dimen/cardElevation">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_margin="@dimen/_20dp"
+            android:src="@drawable/baseline_shopping_cart_24"
+            android:layout_width="@dimen/thumbnail_width"
+            android:layout_height="@dimen/thumbnail_height"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/img_cart" />
+        <TextView
+            android:layout_margin="@dimen/_20dp"
+            style="@style/HighLightedText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_cart"
+            android:text="Id"
+            android:id="@+id/tv_order_id"/>
+
+        <TextView
+            android:layout_margin="@dimen/margin_20dp"
+            style="@style/SecondaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Status"
+            android:id="@+id/tv_status"/>
+        <TextView
+            android:layout_margin="@dimen/_20dp"
+            style="@style/SecondaryText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_id"
+            app:layout_constraintStart_toEndOf="@id/img_cart"
+            android:text="Address"
+            android:id="@+id/tv_address"/>
+        <TextView
+            android:layout_margin="@dimen/_20dp"
+            style="@style/SecondaryText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_address"
+            app:layout_constraintStart_toEndOf="@id/img_cart"
+            android:text="Amount"
+            android:id="@+id/tv_amount"/>
+        <TextView
+            android:layout_margin="@dimen/_20dp"
+            style="@style/SecondaryText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_amount"
+            app:layout_constraintStart_toEndOf="@id/img_cart"
+            android:text="Date"
+            android:id="@+id/tv_date"/>
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

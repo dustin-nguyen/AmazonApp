@@ -22,16 +22,15 @@ class CartPresenter()
                         pro:Product ->
                     listOfProductInCart.add(ProductInCart(pro,0,0))
                     Log.i(TAG,"Item in cart :\n${listOfProductInCart.toString()}")
-
                 }
             }
             else->{
             }
         }
     }
+
     override fun getAllItemInCart() {
         cartFragmentView.getListOfItemSuccess(listOfProductInCart)
-
     }
 
     override fun getAllInCart(): ArrayList<ProductInCart> {
@@ -56,13 +55,9 @@ class CartPresenter()
         return totalPrice
     }
 
-
     companion object{
         var totalPrice=0
         var listOfProductInCart= ArrayList<ProductInCart>()
         const val TAG="CartPresenter"
-
     }
-
-
 }

@@ -14,15 +14,16 @@ class CheckoutPresenter:CheckoutContract.ICheckoutPresenter {
     override var address: Address
         get() = _address
         set(value) {_address=value}
+
     override var listOfProductInCart: List<ProductInCart>
         get() = _listOfProductInCart
         set(value) {_listOfProductInCart=value}
+
     override var paymentMethod: String
         get() = _paymentMethod
         set(value) {_paymentMethod=value}
+
     override var totalPrice: Int
         get() = _totalPrice
         set(value) {_totalPrice=value}
-
-
 }

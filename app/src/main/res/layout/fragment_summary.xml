@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:text="address items"
             android:id="@+id/tv_delivery"
-            style="@style/PrimaryText"
+            style="@style/SecondaryText"
             app:layout_constraintTop_toBottomOf="@id/tv_delivery_title"
             app:layout_constraintStart_toStartOf="parent"/>
         <View
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:text="Payment "
             android:id="@+id/tv_payment"
-            style="@style/PrimaryText"
+            style="@style/SecondaryText"
             app:layout_constraintTop_toBottomOf="@id/tv_payment_title"
             app:layout_constraintStart_toStartOf="parent"/>
         <androidx.appcompat.widget.AppCompatButton

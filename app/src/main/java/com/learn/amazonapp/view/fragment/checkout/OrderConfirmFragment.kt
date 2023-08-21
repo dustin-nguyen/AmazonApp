@@ -9,31 +9,25 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.learn.amazonapp.R
-import com.learn.amazonapp.databinding.FragmentCartWebviewBinding
-import com.learn.amazonapp.databinding.FragmentSummaryBinding
+import com.learn.amazonapp.databinding.FragmentOrderConfirmBinding
 import com.learn.amazonapp.model.ProductInCart
+import com.learn.amazonapp.model.remote.VolleyHandler
 import com.learn.amazonapp.model.remote.entity.Address
 import com.learn.amazonapp.presenter.checkout.CheckoutPresenter
-import com.learn.amazonapp.presenter.checkout.SummaryContract
+import com.learn.amazonapp.presenter.checkout.OrderConfirmContract
+import com.learn.amazonapp.presenter.checkout.OrderConfirmPresenter
 import com.learn.amazonapp.presenter.checkout.SummaryPresenter
-import com.learn.amazonapp.view.HomeCommunicator
+import com.learn.amazonapp.view.adapter.checkout.OrderConfirmAdapter
 import com.learn.amazonapp.view.adapter.checkout.SummaryAdapter
 
-class SummaryFragment(
+class OrderConfirmFragment(
     val checkoutPresenter: CheckoutPresenter)
-    : Fragment(),SummaryContract.ISummaryView {
+    : Fragment(),OrderConfirmContract.IOrderConfirmView {
 
-    lateinit var binding: FragmentSummaryBinding
+    lateinit var binding: FragmentOrderConfirmBinding
     lateinit var listOfItem: List<ProductInCart>
-    lateinit var summaryPresenter: SummaryPresenter
-    lateinit var summaryAdapter: SummaryAdapter
-
-    lateinit var homeCommunicator: HomeCommunicator
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        homeCommunicator=context as HomeCommunicator
-    }
+    lateinit var orderConfirmPresenter: OrderConfirmPresenter
+    lateinit var orderConfirmAdapter: OrderConfirmAdapter
 
 
     override fun onCreateView(
@@ -41,19 +35,8 @@ class SummaryFragment(
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding=FragmentSummaryBinding.inflate(inflater,container,false)
+        binding= FragmentOrderConfirmBinding.inflate(inflater,container,false)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setup()
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        summaryPresenter.setupView()
     }
     override var fragmentContext: Context
         get() = requireContext()
@@ -75,35 +58,44 @@ class SummaryFragment(
     override fun setDelivery(delivery: Address) {
         binding.tvDelivery.text= "${delivery.title}\n ${delivery.address}"
     }
+
+    override fun setOrderIDAndStatus(orderId: String, status: String) {
+        binding.tvOrderNumber.text= orderId
+        binding.tvOrderStatus.text= status
+    }
+
+    override fun placeOrderFail(error: String) {
+        makeToast(error)
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setup()
+    }
+
     private fun setup() {
         intiPresenter()
-        binding.btnPlaceOrder.setOnClickListener {
-            homeCommunicator.goToFragment(ORDER_CONFIRM,OrderConfirmFragment(checkoutPresenter))
-        }
-
+        orderConfirmPresenter.placeOrder()
     }
     private fun intiPresenter() {
-        summaryPresenter= SummaryPresenter(checkoutPresenter,this)
+        orderConfirmPresenter= OrderConfirmPresenter(
+            VolleyHandler(requireContext()),
+            checkoutPresenter,this)
+
     }
     private fun setupRecyclerView(){
         binding.rvItem.layoutManager=
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
 
-        summaryAdapter= SummaryAdapter(listOfItem)
-        binding.rvItem.adapter=summaryAdapter
+        orderConfirmAdapter= OrderConfirmAdapter(listOfItem)
+        binding.rvItem.adapter=orderConfirmAdapter
 
-        summaryAdapter.setOnProductSelectedListener { product, i ->
+        orderConfirmAdapter.setOnProductSelectedListener { product, i ->
             makeToast(product.toString())
         }
     }
     fun makeToast(message: String) {
         Toast.makeText(requireContext(),message, Toast.LENGTH_SHORT).show()
     }
-    companion object {
-
-        const val ORDER_CONFIRM="CONFIRMATION"
-
-    }
-
-
 }
