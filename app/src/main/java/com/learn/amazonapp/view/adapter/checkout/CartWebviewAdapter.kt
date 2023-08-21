@@ -10,10 +10,11 @@ import com.learn.amazonapp.presenter.cart.CartPresenter
 import com.learn.amazonapp.view.CartCommunicator
 import com.learn.amazonapp.view.adapter.CartAdapter
 
-class CartWebviewAdapter(val listOfItem: List<ProductInCart>, ):
-    RecyclerView.Adapter<CartWebviewAdapter.ProductViewHolder>() {
-    private lateinit var binding: ViewHolderCartCheckoutBinding
+class CartWebviewAdapter(
+    val listOfItem: List<ProductInCart>)
+    : RecyclerView.Adapter<CartWebviewAdapter.ProductViewHolder>() {
 
+    private lateinit var binding: ViewHolderCartCheckoutBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -29,7 +30,6 @@ class CartWebviewAdapter(val listOfItem: List<ProductInCart>, ):
     override fun getItemCount(): Int {
         return listOfItem.size
     }
-
 
     private lateinit var productSelected: (ProductInCart, Int) -> Unit
     fun setOnProductSelectedListener(listener: (ProductInCart, Int) -> Unit) {
@@ -56,9 +56,6 @@ class CartWebviewAdapter(val listOfItem: List<ProductInCart>, ):
                 //Picasso.get().load(URL_IMAGE+category.category_image_url).into(binding.imgCategory)
 
             }
-
-
         }
-
     }
 }

@@ -7,23 +7,27 @@ import com.learn.amazonapp.model.remote.entity.PlaceOrderResponse
 import java.lang.Error
 
 interface OrderConfirmContract {
+
     interface IOrderConfirmPresenter{
 
         fun setupView(placeOrderResponse: PlaceOrderResponse)
-        fun placeOrder()
 
+        fun placeOrder()
     }
     interface IOrderConfirmView{
 
         var fragmentContext: Context
+
         fun setTotalPrice(totalPrice: Int)
+
         fun getListOfItemSuccess(listOfProduct: List<ProductInCart>)
 
         fun setPayMethod(payment: String)
+
         fun setDelivery(delivery: Address)
+
         fun setOrderIDAndStatus(orderId:String, status:String)
 
         fun placeOrderFail(error: String)
-
     }
 }

@@ -21,9 +21,7 @@ class HomeFragmentPresenter(
                 getResponse as CategoryResponse
                 Log.i(TAG,getResponse.toString())
                 homeFragmentView.getListOfCategorySuccess(getResponse.categories)
-
             }
-
             override fun failure(error: String) {
                 Log.i(LoginFragmentPresenter.TAG,error)
                 homeFragmentView.getListOfCategoryFail(error)
@@ -31,11 +29,8 @@ class HomeFragmentPresenter(
         })
     }
 
-
     companion object{
         const val TAG="HomeFragmentPresenter"
         const val RESPONSE_OKAY=1
-        val imgMap= HashMap<String,Int>()
     }
-
 }

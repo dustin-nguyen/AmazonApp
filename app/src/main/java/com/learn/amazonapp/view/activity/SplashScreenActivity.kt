@@ -40,22 +40,20 @@ class SplashScreenActivity : AppCompatActivity() , SplashContract.ISplashView{
         Handler().postDelayed({
             splashPresenter.checkLogin()
         },2000)
-
-
     }
     private fun initPresenter(){
         splashPresenter= SplashPresenter(this)
     }
+
     private fun goToActivity( cls: Class<*> ){
         val dataIntent = Intent(this, cls)
         startActivity(dataIntent)
         finish()
     }
+
     private fun startAnimation(){
         binding.splashImg.startAnimation(
             AnimationUtils.loadAnimation(this@SplashScreenActivity,
                 R.anim.bounce_anim))
     }
-
-
 }

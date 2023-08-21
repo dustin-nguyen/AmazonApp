@@ -24,9 +24,7 @@ class ListOfOrderPresenter(
                 getResponse as OrderResponse
                 Log.i(TAG,getResponse.toString())
                 listOfOrderView.getListOfItemSuccess(getResponse.orders)
-
             }
-
             override fun failure(error: String) {
                 Log.i(TAG,error)
                 listOfOrderView.getListOfItemCategoryFail(error)
@@ -36,8 +34,5 @@ class ListOfOrderPresenter(
 
     companion object {
         const val TAG = "ListOfOrderPresenter"
-
     }
-
-
 }

@@ -11,9 +11,11 @@ import com.learn.amazonapp.presenter.util.SharedPrefConstant.FULL_NAME
 import com.learn.amazonapp.presenter.util.SharedPrefConstant.MOBILE_NO
 import com.learn.amazonapp.presenter.util.SharedPrefConstant.USER_ID
 
-class LoginFragmentPresenter(private val volleyHandler: VolleyHandler,
-                             private val loginFragmentView: LoginFragmentContract.ILoginFragmentView)
+class LoginFragmentPresenter(
+    private val volleyHandler: VolleyHandler,
+    private val loginFragmentView: LoginFragmentContract.ILoginFragmentView)
     :LoginFragmentContract.ILoginFragmentPresenter {
+
     override fun login(emailId: String, password: String) {
         volleyHandler.postLogin(emailId,password,responseCallBack = object : ResponseCallBack{
             override fun success(loginResponse: Any) {
@@ -22,17 +24,17 @@ class LoginFragmentPresenter(private val volleyHandler: VolleyHandler,
                 if(loginResponse.status == RESPONSE_OKAY){
                     loginFragmentView.loginSuccess()
                     setLogin(loginResponse.user!!)
-                    }
+                }
                 else
                     loginFragmentView.loginFail(loginResponse.message)
             }
-
             override fun failure(error: String) {
                 Log.i(TAG,error)
                 loginFragmentView.loginFail(error)
             }
         })
     }
+
     fun setLogin(user : User){
         val securedSharedPreferences = SharedPrefConstant.getSecuredSharedPref(loginFragmentView.fragmentContext)
         val securedEditor = securedSharedPreferences.edit()
@@ -43,7 +45,6 @@ class LoginFragmentPresenter(private val volleyHandler: VolleyHandler,
         securedEditor.putString(MOBILE_NO,user.mobile_no)
 
         securedEditor.apply()
-
     }
     companion object{
         const val TAG="LoginFragmentPresenter"

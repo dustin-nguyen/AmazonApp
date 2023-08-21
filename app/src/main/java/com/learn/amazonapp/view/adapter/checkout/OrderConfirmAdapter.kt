@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.learn.amazonapp.databinding.ViewHolderCartCheckoutBinding
 import com.learn.amazonapp.model.ProductInCart
 
-class OrderConfirmAdapter(val listOfItem: List<ProductInCart> ):
-    RecyclerView.Adapter<OrderConfirmAdapter.ProductViewHolder>() {
-    private lateinit var binding: ViewHolderCartCheckoutBinding
+class OrderConfirmAdapter(val listOfItem: List<ProductInCart> )
+    : RecyclerView.Adapter<OrderConfirmAdapter.ProductViewHolder>() {
 
+    private lateinit var binding: ViewHolderCartCheckoutBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -25,8 +25,7 @@ class OrderConfirmAdapter(val listOfItem: List<ProductInCart> ):
     override fun getItemCount(): Int {
         return listOfItem.size
     }
-
-
+    
     private lateinit var productSelected: (ProductInCart, Int) -> Unit
     fun setOnProductSelectedListener(listener: (ProductInCart, Int) -> Unit) {
         productSelected = listener

@@ -11,5 +11,4 @@ class SummaryPresenter(
         summaryView.setTotalPrice(checkoutPresenter.totalPrice)
         summaryView.getListOfItemSuccess(checkoutPresenter.listOfProductInCart)
     }
-
 }

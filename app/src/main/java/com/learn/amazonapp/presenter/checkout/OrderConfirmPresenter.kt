@@ -15,6 +15,7 @@ class OrderConfirmPresenter(
     : OrderConfirmContract.IOrderConfirmPresenter {
 
     lateinit var placeOrderObject: PlaceOrderObject
+
     override fun setupView(placeOrderResponse: PlaceOrderResponse) {
         orderConfirmView.setOrderIDAndStatus(
             placeOrderResponse.order_id.toString(),
@@ -55,18 +56,15 @@ class OrderConfirmPresenter(
                     setupView(getResponse)
                 else
                     orderConfirmView.placeOrderFail(getResponse.message)
-
             }
-
             override fun failure(error: String) {
                 Log.i(TAG,error)
                 orderConfirmView.placeOrderFail(error)
             }
         })
     }
+
     companion object{
         const val TAG="OrderConfirmPresenter"
-
     }
-
 }

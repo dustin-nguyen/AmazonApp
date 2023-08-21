@@ -12,15 +12,14 @@ class ShowItemPresenter (
     private val volleyHandler: VolleyHandler,
     private val showItemFragmentView: ShowItemFragmentContract.IShowItemFragmentView)
     : ShowItemFragmentContract.IShowItemFragmentPresenter {
+
     override fun getListOfItem(subCategoryId: String) {
         volleyHandler.getItemBySubCatId(subCategoryId,responseCallBack = object : ResponseCallBack {
             override fun success(getResponse: Any) {
                 getResponse as ListOfItemResponse
                 Log.i(TAG,getResponse.toString())
                 showItemFragmentView.getListOfItemSuccess(getResponse.products)
-
             }
-
             override fun failure(error: String) {
                 Log.i(LoginFragmentPresenter.TAG,error)
                 showItemFragmentView.getListOfItemCategoryFail(error)
@@ -28,12 +27,7 @@ class ShowItemPresenter (
         })
     }
 
-
-
     companion object{
         const val TAG="ShowItemPresenter"
-
     }
-
-
 }

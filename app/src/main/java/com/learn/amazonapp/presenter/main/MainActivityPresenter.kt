@@ -22,7 +22,6 @@ class MainActivityPresenter(
     private val mainActivityView: MainActivityContract.IMainActivityView)
     :MainActivityContract.IMainActivityPresenter {
     override fun decideTitleBasedOnFragment(fragment: Fragment?) {
-
         when(fragment){
             is HomeFragment -> mainActivityView.setTitle(HOME_TITLE)
             is SubCatFragment -> mainActivityView.setTitle(fragment.category.category_name)
@@ -38,7 +37,6 @@ class MainActivityPresenter(
         val email = securedSharedPreferences.getString(SharedPrefConstant.EMAIL_ID,"") ?:""
         val name = securedSharedPreferences.getString(SharedPrefConstant.FULL_NAME,"") ?:""
         mainActivityView.setNameAndEmail(name,email)
-
     }
 
     override fun logout() {
@@ -53,9 +51,7 @@ class MainActivityPresenter(
                 val securedEditor = securedSharedPreferences.edit()
                 securedEditor.clear()
                 securedEditor.apply()
-
             }
-
             override fun failure(error: String) {
                 Log.i(TAG,error)
                 mainActivityView.logout()

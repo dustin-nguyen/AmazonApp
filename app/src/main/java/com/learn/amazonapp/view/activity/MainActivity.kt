@@ -34,8 +34,6 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
     private lateinit var cartPresenter: CartPresenter
     private var isReceiverRegistered = false
 
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == android.R.id.home){
             if(binding.main.isDrawerOpen(GravityCompat.START))
@@ -62,8 +60,6 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
 
         emailView.text = email
         nameView.text = "Welcome $username"
-
-
     }
 
     override fun logout() {
@@ -77,6 +73,7 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
         // not work with theme switch
       //  unregisterReceiver(cartPresenter)
     }
+
     override fun onBackPressed() {
         if(supportFragmentManager.backStackEntryCount>0){
             supportFragmentManager.popBackStackImmediate()
@@ -84,6 +81,7 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
         }else
             super.onBackPressed()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
@@ -120,11 +118,13 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
             true
         }
     }
+
     private fun handleMenuEvent(backStackEntryName:String,fragment: Fragment){
         binding.main.closeDrawer(GravityCompat.START)
         supportFragmentManager.beginTransaction().replace(R.id.parent,fragment).addToBackStack(backStackEntryName).commit()
         mainActivityPresenter.decideTitleBasedOnFragment(fragment)
     }
+
     override fun goToFragment(backStackEntryName:String,fragment: Fragment) {
         handleMenuEvent(backStackEntryName,fragment)
     }
@@ -137,7 +137,6 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
     private fun registerLocalBroadCastRecevier() {
         localBroadCastManager = LocalBroadcastManager.getInstance(this)
         cartPresenter= CartPresenter()
-
         // register receiver
         localBroadCastManager.registerReceiver(
             cartPresenter, IntentFilter(TO_CART_ACTION)
@@ -145,6 +144,7 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
         isReceiverRegistered = true
 
     }
+
     private fun setupHeader(){
         val navigationView =findViewById<NavigationView>(R.id.navViews)
         val headerView= navigationView.getHeaderView(0)
@@ -164,7 +164,4 @@ class MainActivity : AppCompatActivity(),HomeCommunicator,MainActivityContract.I
         const val CART_TITLE="Cart"
         const val ORDERS="Orders"
     }
-
-
-
 }

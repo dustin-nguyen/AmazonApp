@@ -44,16 +44,12 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class VolleyHandler(val context: Context)  {
-//    lateinit var imgLoader: ImageLoader
-//    init {
-//        initializeImgLoader(context)
-//    }
+
     fun postLogin(emailId:String,password:String, responseCallBack: ResponseCallBack){
         val requestQueue = Volley.newRequestQueue(context)
         val jsonObject = JSONObject()
         jsonObject.put(KEY_EMAIL_ID, emailId)
         jsonObject.put(KEY_PASSWORD, password)
-
 
         val url = BASE_URL+ BASE_LOGIN
 
@@ -76,8 +72,8 @@ class VolleyHandler(val context: Context)  {
             }
         }
         requestQueue.add(jsonRequest)
-
     }
+
     fun getCategory(responseCallBack: ResponseCallBack){
         val requestQueue = Volley.newRequestQueue(context)
         val jsonObject = JSONObject()
@@ -103,6 +99,7 @@ class VolleyHandler(val context: Context)  {
         }
         requestQueue.add(jsonRequest)
     }
+
     fun getSubCategoryById(id:String,responseCallBack: ResponseCallBack){
         val requestQueue = Volley.newRequestQueue(context)
         val jsonObject = JSONObject()
@@ -125,11 +122,10 @@ class VolleyHandler(val context: Context)  {
                 header[CONTENT_TYPE]= APPLICATION_JSON
                 return super.getHeaders()
             }
-
-
         }
         requestQueue.add(jsonRequest)
     }
+
     fun getItemBySubCatId(subCategoryId:String,responseCallBack: ResponseCallBack){
         val requestQueue = Volley.newRequestQueue(context)
         val jsonObject = JSONObject()
@@ -152,11 +148,10 @@ class VolleyHandler(val context: Context)  {
                 header[CONTENT_TYPE]= APPLICATION_JSON
                 return super.getHeaders()
             }
-
-
         }
         requestQueue.add(jsonRequest)
     }
+
     fun getItemById(id:String,responseCallBack: ResponseCallBack){
         val requestQueue = Volley.newRequestQueue(context)
         val jsonObject = JSONObject()
@@ -179,11 +174,10 @@ class VolleyHandler(val context: Context)  {
                 header[CONTENT_TYPE]= APPLICATION_JSON
                 return super.getHeaders()
             }
-
-
         }
         requestQueue.add(jsonRequest)
     }
+
     fun getListOfAddressOfUser(userid:String,responseCallBack: ResponseCallBack){
         val requestQueue = Volley.newRequestQueue(context)
         val jsonObject = JSONObject()
@@ -209,6 +203,7 @@ class VolleyHandler(val context: Context)  {
         }
         requestQueue.add(jsonRequest)
     }
+
     fun addAddressForUser(userid:String, address: Address, responseCallBack: ResponseCallBack){
         val requestQueue = Volley.newRequestQueue(context)
         val jsonObject = JSONObject()
@@ -237,6 +232,7 @@ class VolleyHandler(val context: Context)  {
         }
         requestQueue.add(jsonRequest)
     }
+
     fun constructJSONObjectForPlaceOrder(productPlaceOrderObject: PlaceOrderObject):JSONObject{
         val jsonObject = JSONObject()
         jsonObject.put(USER_ID,productPlaceOrderObject.userid)
@@ -247,7 +243,6 @@ class VolleyHandler(val context: Context)  {
         addressJSONObject.put(ADDRESS, productPlaceOrderObject.address.address)
 
         jsonObject.put(DELIVERY_ADDRESS,addressJSONObject)
-
 
         val itemJsonArray = JSONArray()
 
@@ -260,14 +255,11 @@ class VolleyHandler(val context: Context)  {
         }
 
         jsonObject.put(ITEMS,itemJsonArray)
-
         jsonObject.put(BILL_AMOUNT,productPlaceOrderObject.billAmount)
         jsonObject.put(PAYMENT_METHOD,productPlaceOrderObject.payMethod)
-
-
         return jsonObject
-
     }
+
     fun postPlaceOrder(productPlaceOrderObject:PlaceOrderObject, responseCallBack: ResponseCallBack){
         val requestQueue = Volley.newRequestQueue(context)
         val jsonObject = constructJSONObjectForPlaceOrder(productPlaceOrderObject)
@@ -324,8 +316,6 @@ class VolleyHandler(val context: Context)  {
         val requestQueue = Volley.newRequestQueue(context)
         val jsonObject = JSONObject()
         jsonObject.put(KEY_EMAIL_ID, email_id)
-
-
         val url = "$BASE_URL$BASE_LOGOUT"
         val jsonRequest =object :JsonObjectRequest(Method.POST, url, jsonObject,
             Response.Listener { response ->
@@ -362,7 +352,6 @@ class VolleyHandler(val context: Context)  {
         const val KEY_CATEGORY_ID="category_id"
         const val BASE_LIST_OF_ITEM="$BASE_URL$BASE_SUBCATEGORY/products"
         const val BASE_PRODUCT="Product/details/"
-
         const val KEY_EMAIL_ID="email_id"
         const val KEY_PASSWORD="password"
         const val CONTENT_TYPE= "Content-type"

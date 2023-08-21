@@ -13,11 +13,13 @@ interface SummaryContract {
     interface ISummaryView{
 
         var fragmentContext: Context
+
         fun setTotalPrice(totalPrice: Int)
+
         fun getListOfItemSuccess(listOfProduct: List<ProductInCart>)
 
         fun setPayMethod(payment: String)
-        fun setDelivery(delivery:Address)
 
+        fun setDelivery(delivery:Address)
     }
 }
